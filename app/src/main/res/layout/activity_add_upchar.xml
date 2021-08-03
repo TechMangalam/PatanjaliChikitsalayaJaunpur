@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddUpcharActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAddUpchar"
+        app:title="Add Upchar"
+        android:background="?attr/colorPrimaryVariant"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_below="@id/toolbarAddUpchar"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nameHead"
+                android:text="रोग का नाम"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dName"
+                android:layout_marginTop="5dp"
+                android:hint="Disease name(रोग का नाम)"
+                android:layout_below="@id/nameHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/causeHead"
+                android:text="Symptoms and causes of disease"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dCauseE"
+                android:layout_marginTop="5dp"
+                android:hint="Enter Symptoms and causes"
+                android:layout_below="@id/causeHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/causeHeadH"
+                android:text="रोग का लक्षण और कारण"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dCauseE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dCauseH"
+                android:layout_marginTop="5dp"
+                android:hint="रोग का लक्षण और कारण लिखिए"
+                android:layout_below="@id/causeHeadH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/cureHead"
+                android:text="Cure of disease"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dCauseH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dCureE"
+                android:layout_marginTop="5dp"
+                android:hint="Write cure for the disease"
+                android:layout_below="@id/cureHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/cureHeadH"
+                android:text="रोग का इलाज"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dCureE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dCureH"
+                android:layout_marginTop="5dp"
+                android:hint="रोग का इलाज लिखिए"
+                android:layout_below="@id/cureHeadH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/regimenHead"
+                android:text="Regimen and avoidings"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dCureH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dRegimenE"
+                android:layout_marginTop="5dp"
+                android:hint="Write regimen for the disease"
+                android:layout_below="@id/regimenHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/regimenHeadH"
+                android:text="परहेज"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dRegimenE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dRegimenH"
+                android:layout_marginTop="5dp"
+                android:hint="रोग के लिये परहेज लिखिए"
+                android:layout_below="@id/regimenHeadH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/vidLinkHead"
+                android:text="Related youtube video link"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dRegimenH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/videoLink"
+                android:layout_marginTop="5dp"
+                android:hint="रोग के सन्दर्भ में youtube वीडियो लिंक"
+                android:layout_below="@id/vidLinkHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/upcharImgView"
+                android:layout_below="@id/videoLink"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView
+                android:id="@+id/youtubeWebembed"
+                android:layout_below="@id/upcharImgView"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:visibility="gone"
+                tools:ignore="WebViewLayout" />
+
+            <Button
+                android:id="@+id/attachImageBtn"
+                android:text="Attach Image"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_below="@id/youtubeWebembed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/videoCheckBtn"
+                android:text="Check Video"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/youtubeWebembed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:text="Submit"
+                android:enabled="false"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/videoCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

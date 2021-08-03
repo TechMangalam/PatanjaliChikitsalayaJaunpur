@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "496440754505",
+    "project_id": "patanjali-chikitsalaya-jaunpur",
+    "storage_bucket": "patanjali-chikitsalaya-jaunpur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496440754505:android:1ffe8051dd7870ecae5a98",
+        "android_client_info": {
+          "package_name": "com.bitaam.patanjalichikitsalayajaunpur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496440754505-uq8hisv39ooq22ohshuh60adkfg62qk2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ6cAjUVooIDLhyuILgRZtLtDjRwpmAU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496440754505-uq8hisv39ooq22ohshuh60adkfg62qk2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNuskeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAddUpchar"
+        app:title="Add Nuske"
+        android:background="?attr/colorPrimaryVariant"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:layout_below="@id/toolbarAddUpchar"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nameHead"
+                android:text="Nuska Title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dName"
+                android:layout_marginTop="5dp"
+                android:hint="Name of nuska(नुस्के का नाम)"
+                android:layout_below="@id/nameHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/causeHead"
+                android:text="Benefits"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dBenifitsE"
+                android:layout_marginTop="5dp"
+                android:hint="Enter benefits"
+                android:layout_below="@id/causeHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/causeHeadH"
+                android:text="लाभ"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dBenifitsE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dBenifitsH"
+                android:layout_marginTop="5dp"
+                android:hint="इस नुस्के के लाभ लिखिए"
+                android:layout_below="@id/causeHeadH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/cureHead"
+                android:text="Method of Doing"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dBenifitsH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dHowE"
+                android:layout_marginTop="5dp"
+                android:hint="Write how to use this nuska"
+                android:layout_below="@id/cureHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/cureHeadH"
+                android:text="उपयोग करने की विधि "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dHowE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/dHowH"
+                android:layout_marginTop="5dp"
+                android:hint="उपयोग करने की विधि लिखिए"
+                android:layout_below="@id/cureHeadH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+            <TextView
+                android:id="@+id/vidLinkHead"
+                android:text="Related youtube video link"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@id/dHowH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/videoLink"
+                android:layout_marginTop="5dp"
+                android:hint="नुस्के के सन्दर्भ में youtube वीडियो लिंक"
+                android:layout_below="@id/vidLinkHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/upcharImgView"
+                android:layout_below="@id/videoLink"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView
+                android:id="@+id/youtubeWebembed"
+                android:layout_below="@id/upcharImgView"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:visibility="gone"
+                tools:ignore="WebViewLayout" />
+
+            <Button
+                android:id="@+id/attachImageBtn"
+                android:text="Attach Image"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_below="@id/youtubeWebembed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/videoCheckBtn"
+                android:text="Check Video"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/youtubeWebembed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/submitBtn"
+                android:text="Submit"
+                android:enabled="false"
+                android:textColor="@android:color/black"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/videoCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

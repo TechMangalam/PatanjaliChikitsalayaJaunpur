@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/colorPrimaryVariant"
+    android:forceDarkAllowed="false"
+    tools:context=".SignInActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_alignParentTop="true"
+        android:id="@+id/logo"
+        android:src="@drawable/mera_upchar_logo1"
+        android:layout_width="120dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="120dp"/>
+
+
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_below="@id/logo"
+        android:text="Welcome to My Upchaar"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:typeface="sans"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="true"
+        android:hint="Enter Name"
+        app:boxCornerRadiusBottomEnd="14dp"
+        android:padding="5dp"
+        app:endIconMode="clear_text"
+        app:helperText="* Required"
+        android:textColorHint="@android:color/white"
+        app:helperTextTextColor="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:endIconTint="@android:color/white"
+        app:startIconTint="@android:color/white"
+        android:layout_below="@+id/title"
+        app:startIconDrawable="@drawable/ic_baseline_perm_identity_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_input"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="true"
+        android:hint="Enter Phone No."
+        app:boxCornerRadiusBottomEnd="14dp"
+        android:padding="5dp"
+        app:endIconMode="clear_text"
+        app:helperText="* Required"
+        android:textColorHint="@android:color/white"
+        app:helperTextTextColor="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:endIconTint="@android:color/white"
+        app:startIconTint="@android:color/white"
+        android:layout_below="@+id/nameInput"
+        app:startIconDrawable="@drawable/ic_baseline_local_phone_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_input"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/otpInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="false"
+        android:hint="Enter OTP"
+        app:boxCornerRadiusBottomEnd="14dp"
+        android:padding="5dp"
+        app:endIconMode="clear_text"
+        app:helperText="* Required"
+        android:textColorHint="@android:color/white"
+        app:helperTextTextColor="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:endIconTint="@android:color/white"
+        app:startIconTint="@android:color/white"
+        android:layout_below="@+id/phoneInput"
+        app:startIconDrawable="@drawable/ic_baseline_vpn_key_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/otp_input"
+            android:maxLength="6"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/otpInput"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/generateOtpBtn"
+            android:text="generate otp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/submitOtpBtn"
+            android:text="Login"
+            android:layout_margin="10dp"
+            android:enabled="false"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progBar"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NuskeDisplayActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarYoga"
+        android:background="?attr/colorPrimaryVariant"
+        app:title="Nuske Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView
+        android:id="@+id/yogaWebView"
+        android:layout_below="@id/toolbarYoga"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"/>
+
+    <ProgressBar
+        android:id="@+id/yogaLoadingProgrssbar"
+        android:layout_below="@+id/toolbarYoga"
+        android:layout_marginTop="90dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:id="@+id/scrollContentView"
+        android:layout_below="@id/yogaWebView"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/yogaConBan11"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            <TextView
+                android:id="@+id/benifitsTitle"
+                android:text="Benifits(लाभ)"
+                android:textSize="20sp"
+                android:layout_below="@+id/yogaConBan11"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/benifitsE"
+                android:textSize="18sp"
+                android:layout_below="@id/benifitsTitle"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/benifitsE"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:id="@+id/yogaConBan1"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            <!-- test id - ca-app-pub-3940256099942544/6300978111
+            ad id - ca-app-pub-8103108161786269/4083653422-->
+
+            <TextView
+                android:id="@+id/benifitsH"
+                android:textSize="18sp"
+                android:layout_below="@id/yogaConBan1"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/benifitsH"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:id="@+id/yogaConBan12"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            <TextView
+                android:id="@+id/howToDoTitle"
+                android:text="How to use(उपयोग करने की विधि)"
+                android:textSize="20sp"
+                android:layout_below="@id/yogaConBan12"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/methodE"
+                android:textSize="18sp"
+                android:layout_below="@id/howToDoTitle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/methodE"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:id="@+id/yogaConBan2"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            <TextView
+                android:id="@+id/methodH"
+                android:textSize="18sp"
+                android:layout_below="@id/yogaConBan2"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/methodH"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:id="@+id/yogaConBan13"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

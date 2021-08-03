@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimaryVariant"
+        app:title="Profile"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:id="@+id/toolbarProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:background="@drawable/circular_image_bg"
+        android:id="@+id/profile_image"
+        android:layout_marginTop="50dp"
+        android:layout_width="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/toolbarProfile"
+        android:adjustViewBounds="true"
+        app:roundingBorderColor="@android:color/black"
+        app:roundingBorderWidth="1dp"
+        fresco:placeholderImage="@drawable/profile_icon"
+        app:roundAsCircle="true"
+        app:viewAspectRatio="1"
+        android:layout_height="wrap_content" />
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/photo_selector_icon"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_alignBottom="@id/profile_image"
+        android:layout_marginStart="-40dp"
+        android:background="@drawable/circular_bg_noborder"
+        android:elevation="20dp"
+        fresco:roundingBorderPadding="5dp"
+        fresco:placeholderImage="@drawable/photo_selecter_icon"
+        app:roundAsCircle="true"
+        app:viewAspectRatio="1"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"/>
+
+
+
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/profile_image"
+        android:visibility="gone"
+        android:id="@+id/progressCircular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/profileNametv"
+        android:layout_marginTop="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:drawableStart="@drawable/profile_icon"
+        android:drawablePadding="10dp"
+        android:paddingStart="20dp"
+        android:singleLine="true"
+        android:layout_below="@+id/profile_image"/>
+
+    <EditText
+        android:id="@+id/profileName"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:textColor="?attr/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:paddingStart="9dp"
+        android:singleLine="true"
+        android:layout_below="@+id/profileNametv"/>
+
+
+
+    <TextView
+        android:id="@+id/emailProfile"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone No."
+        android:drawableStart="@drawable/ic_baseline_local_phone_24"
+        android:drawablePadding="10dp"
+        android:paddingStart="20dp"
+        android:singleLine="true"
+        android:layout_below="@+id/profileName"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:textColor="?attr/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:paddingStart="9dp"
+        android:singleLine="true"
+        android:layout_below="@+id/emailProfile"/>
+
+
+
+    <Button
+        android:elevation="16dp"
+        android:id="@+id/update"
+        android:background="@drawable/round_button"
+        android:text="Update"
+        android:textColor="@android:color/black"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/cmpName"
+        android:layout_marginBottom="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/cmpName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="20sp"
+        android:typeface="sans"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"
+        android:text="From BitAAM"/>
+
+
+
+</RelativeLayout>

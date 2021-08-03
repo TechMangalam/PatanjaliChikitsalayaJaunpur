@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".YogaTrackingActivity">
+
+    <RelativeLayout
+        android:paddingVertical="5dp"
+        android:background="@color/teal_700"
+        android:id="@+id/yogaNoIndicatorLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/yogaCount1Tv"
+                android:text="1"
+                android:backgroundTint="@color/teal_200"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/prog_to_2"
+                android:layout_width="20dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/yogaCount2Tv"
+                android:text="2"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/prog_to_3"
+                android:layout_width="20dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/yogaCount3Tv"
+                android:text="3"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/prog_to_4"
+                android:layout_width="20dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/yogaCount4Tv"
+                android:text="4"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/prog_to_5"
+                android:layout_width="20dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/yogaCount5Tv"
+                android:text="5"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/prog_to_6"
+                android:layout_width="20dp"
+                android:background="@color/black"
+                android:layout_gravity="center_vertical"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/yogaCount6Tv"
+                android:text="6"
+                android:background="@drawable/circular_image_bg"
+                android:textSize="24sp"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@id/yogaNoIndicatorLl"
+        android:background="@color/browser_actions_bg_grey"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <RelativeLayout
+        android:id="@+id/yogaContentRlt"
+        android:layout_below="@id/yogaNoIndicatorLl"
+        android:layout_above="@id/controllerRlt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView
+            android:id="@+id/yoga_video_webview"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:background="@android:color/black"
+            android:layout_height="220dp"/>
+
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtubePlayerView"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="220dp"/>
+
+        <ProgressBar
+            android:id="@+id/yogaLoadingProgrssbar"
+            android:layout_marginTop="90dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ScrollView
+            android:id="@+id/scrollContentView"
+            android:layout_below="@id/youtubePlayerView"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/introLL"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="20sp"
+                        android:id="@+id/yogaSessionTitle"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:typeface="normal"
+                        android:drawableTint="@color/colorAccent"
+                        android:text="Yoga Session for sugar"
+                        android:singleLine="true"
+                        android:drawablePadding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/yoga_name"
+                        android:layout_below="@id/yogaSessionTitle"
+                        android:text="Kapalbhati Pranayam"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:padding="3dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/colorAccent"
+                        android:drawableStart="@drawable/ic_baseline_yoga_24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/benifitsTitle"
+                    android:text="Benifits(लाभ)"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/introLL"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#00BFA5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/benifitsE"
+                    android:textSize="18sp"
+                    android:layout_below="@id/benifitsTitle"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/benifitsE"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan1"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                <!-- test id - ca-app-pub-3940256099942544/6300978111
+                ad id - ca-app-pub-8103108161786269/4083653422-->
+
+                <TextView
+                    android:id="@+id/benifitsH"
+                    android:textSize="18sp"
+                    android:layout_below="@id/yogaConBan1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/benifitsH"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan12"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                <TextView
+                    android:id="@+id/howToDoTitle"
+                    android:text="Method of doing(करने की विधि)"
+                    android:textSize="20sp"
+                    android:layout_below="@id/yogaConBan12"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#00BFA5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/methodE"
+                    android:textSize="18sp"
+                    android:layout_below="@id/howToDoTitle"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/methodE"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan2"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                <TextView
+                    android:id="@+id/methodH"
+                    android:textSize="18sp"
+                    android:layout_below="@id/yogaConBan2"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/methodH"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan13"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                <TextView
+                    android:id="@+id/notToDoTitle"
+                    android:text="What and whom not to do(क्या और किससे नहीं करना)"
+                    android:textSize="20sp"
+                    android:layout_below="@id/yogaConBan13"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#00BFA5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/notToDoE"
+                    android:textSize="18sp"
+                    android:layout_below="@id/notToDoTitle"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/notToDoE"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan3"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+                <TextView
+                    android:id="@+id/notToDoH"
+                    android:textSize="18sp"
+                    android:layout_below="@id/yogaConBan3"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/notToDoH"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/yogaConBan14"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_above="@id/controllerRlt"
+        android:background="#C003DAC5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <RelativeLayout
+        android:id="@+id/controllerRlt"
+        android:paddingVertical="2dp"
+        android:elevation="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/startYogaBtn"
+                android:text="Start"
+                android:padding="3dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/timerTxtView"
+                android:text="05:00"
+                android:textSize="24sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/nextYogaBtn"
+                android:text="Next"
+                android:padding="3dp"
+                android:enabled="false"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

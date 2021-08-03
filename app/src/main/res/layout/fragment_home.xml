@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <ScrollView
+        android:id="@+id/scroll_home"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/patientManagementCard"
+                android:layout_below="@id/carouselView"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="110dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--<SearchView
+                        android:id="@+id/itemSearchView"
+                        android:searchIcon="@drawable/ic_baseline_search_24"
+                        android:queryHint="Enter item name to search"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="bottom"
+                        android:padding="0dp"
+                        android:closeIcon="@drawable/ic_baseline_close_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>-->
+
+                    <ImageView
+                        android:id="@+id/item_home_imgview"
+                        android:src="@drawable/doc_patient"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+<!--                    <div>Icons made by <a href="https://www.flaticon.com/authors/monkik" title="monkik">monkik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
+
+                    <TextView
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:id="@+id/itemAvailText"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginVertical="5dp"
+                        android:textStyle="bold"
+                        android:typeface="sans"
+                        android:text="Patient Management"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_below="@id/itemAvailText"
+                        android:text="@string/view_your_checkup_records_information_about_patient_and_medicine_report"
+                        android:layout_marginStart="10dp"
+                        android:layout_toStartOf="@id/item_home_imgview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:fillColor="@color/teal_700"
+                android:layout_margin="5dp"
+                app:pageColor="#00000000"
+                app:radius="4dp"
+                app:slideInterval="5000"
+                app:strokeColor="@color/teal_700"
+                app:strokeWidth="2dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/yogaSessionCard"
+                android:layout_below="@id/patientManagementCard"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="5dp"
+                app:cardElevation="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:padding="5dp"
+                    android:background="@drawable/custom_bordered_ripple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="20sp"
+                        android:id="@+id/yogaSessionTitle"
+                        android:textStyle="bold"
+                        android:typeface="sans"
+                        android:drawableTint="@color/colorAccent"
+                        android:text="Start Yoga Session"
+                        android:singleLine="true"
+                        android:drawablePadding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:drawableStartCompat="@drawable/ic_baseline_yoga_24"
+                        app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+                    <TextView
+                        android:layout_below="@id/yogaSessionTitle"
+                        android:text="@string/choose_yoga_session_as_per_your_need"
+                        android:layout_marginStart="35dp"
+                        android:padding="7dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/dailyYogaCard"
+                android:padding="5dp"
+                android:layout_below="@id/yogaSessionCard"
+                android:layout_margin="5dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/dailyYogaTitle"
+                        android:text="Essential Yoga"
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="10dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:paddingStart="5dp"
+                        android:typeface="sans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:drawableStartCompat="@drawable/ic_baseline_border_inner_24" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dailyYogRecycler"
+                        android:layout_below="@id/dailyYogaTitle"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/generalUpchaCard"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                android:layout_below="@id/dailyYogaCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/generalUpcharTitle"
+                        android:text="Comman Disease"
+                        android:drawableStart="@drawable/ic_sharp_blur_circular_24"
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="10dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:paddingStart="5dp"
+                        android:typeface="sans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/generalUpcharRecycler"
+                        android:layout_below="@id/generalUpcharTitle"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addPatientActionBtn"
+        app:elevation="30dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="80dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_baseline_assignment_ind_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</FrameLayout>

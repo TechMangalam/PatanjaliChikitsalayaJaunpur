@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_upchar"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Upchar" />
+
+    <item
+        android:id="@+id/navigation_ask_doctor"
+        android:icon="@drawable/ic_baseline_contact_support_24"
+        android:title="Ask Doctor" />
+
+    <item
+        android:id="@+id/navigation_yoga"
+        android:icon="@drawable/ic_baseline_yoga_24"
+        android:title="Yoga" />
+
+    <item
+        android:id="@+id/navigation_nuske"
+        android:icon="@drawable/ic_baseline_nuske"
+        android:title="Nuske" />
+
+</menu>

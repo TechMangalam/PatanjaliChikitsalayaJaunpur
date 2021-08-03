@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="@drawable/flash_drawable"
+    tools:context=".MainActivity">
+
+
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/appIconCIv"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:src="@drawable/mera_upchar_logo1"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"/>-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/titleTv"-->
+<!--        android:text="@string/app_name"-->
+<!--        android:textSize="40dp"-->
+<!--        android:textStyle="normal"-->
+<!--        android:typeface="sans"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/sponserTv"-->
+<!--        android:text="Sponsered by \nPatanjali Chikitsalaya Jaunpur"-->
+<!--        android:textSize="20dp"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_above="@id/developerTv"-->
+<!--        android:textStyle="normal"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/developerTv"-->
+<!--        android:text="From BitAAM"-->
+<!--        android:textSize="24dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_marginBottom="100dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+
+
+</RelativeLayout>

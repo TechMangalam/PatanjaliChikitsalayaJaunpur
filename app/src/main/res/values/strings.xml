@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">My Upchaar</string>
+    <string name="title_activity_home">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="roleList">
+
+        <item>User</item>
+        <item>Patanjali Chikitsalaya or store</item>
+        <item>Doctor or Vaidya</item>
+
+    </string-array>
+
+    <string-array name="genderList">
+
+        <item>Male</item>
+        <item>Female</item>
+        <item>Others</item>
+
+    </string-array>
+
+    <string-array name="question_type">
+
+        <item>All Questions</item>
+        <item>My Questions</item>
+
+
+    </string-array>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="choose_yoga_session_as_per_your_need">Choose yoga session as per your need.</string>
+    <string name="ask_general_questions_public_mode_to_help_others_otherwise_ask_in_private_mode_by_default_it_is_in_public_mode_you_can_change_mode_any_time_from_questions_more_menu">* Ask general questions in public mode to help others or ask in private mode. By default it is in public mode. You can change mode any time from questions more menu.</string>
+    <string name="ask_in_private">Ask in private</string>
+    <string name="type_your_question_here">Type your question here...</string>
+    <string name="click_on_image_to_open_in_large">Click on image to open in large</string>
+    <string name="view_your_checkup_records_information_about_patient_and_medicine_report">View your checkup records, information about patient and medicine report.</string>
+
+</resources>
