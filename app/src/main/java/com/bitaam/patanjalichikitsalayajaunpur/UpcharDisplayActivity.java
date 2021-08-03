@@ -40,6 +40,7 @@ public class UpcharDisplayActivity extends AppCompatActivity {
     //InterstitialAd interstitialAd;
     AdRequest adRequest;
     ProgressBar progressBar;
+    UpcharModal upcharModal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class UpcharDisplayActivity extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext());
 
         Intent intent = getIntent();
-        UpcharModal upcharModal = (UpcharModal) intent.getSerializableExtra("upcharInfo");
+        upcharModal = (UpcharModal) intent.getSerializableExtra("upcharInfo");
 
         scrollView = findViewById(R.id.scrollContentView);
         toolbar = findViewById(R.id.toolbarYoga);
@@ -96,7 +97,7 @@ public class UpcharDisplayActivity extends AppCompatActivity {
             howH.setText(upcharModal.getCureH());
             notE.setText(upcharModal.getRegimenE());
             notH.setText(upcharModal.getRegimenH());
-            loadVid(checkForLink(upcharModal.getVid()));
+            //loadVid(checkForLink(upcharModal.getVid()));
         }else{
             Toast.makeText(this, "Go back and reopen to refresh", Toast.LENGTH_LONG).show();
         }
@@ -175,6 +176,20 @@ public class UpcharDisplayActivity extends AppCompatActivity {
 
         return html;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadVid(checkForLink(upcharModal.getVid()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        upcharVideo.loadUrl("");
+        upcharVideo.clearCache(true);
+    }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {

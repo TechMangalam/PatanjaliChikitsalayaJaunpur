@@ -13,11 +13,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.PatientListAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.PatientModel;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -45,6 +49,8 @@ public class PatientListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userModal = (UserModal) intent.getSerializableExtra("userInfo");
 
+        MobileAds.initialize(this);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         mobileNo = user.getPhoneNumber();
@@ -61,6 +67,10 @@ public class PatientListActivity extends AppCompatActivity {
         patientListRecycler.setLayoutManager(linearLayoutManager);
 
         databaseActivities(userModal.getPhone());
+
+        AdView adView = findViewById(R.id.patient_list_ads);
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setVisibility(View.VISIBLE);
 
     }
 

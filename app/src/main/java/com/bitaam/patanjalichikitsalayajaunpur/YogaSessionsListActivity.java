@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.YogaAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.YogaSessionAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.YogaModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.YogaSessionModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +34,16 @@ public class YogaSessionsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yoga_sessions_list);
 
+        MobileAds.initialize(this);
+
         yogaSessionRecycler = findViewById(R.id.yoga_session_recycler);
         yogaSessionRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
         databaseActivities();
+
+        AdView adView = findViewById(R.id.yoga_session_list_ads);
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setVisibility(View.VISIBLE);
 
     }
 

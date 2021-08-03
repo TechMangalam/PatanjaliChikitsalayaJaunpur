@@ -32,6 +32,9 @@ import com.bitaam.patanjalichikitsalayajaunpur.R;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.DoubtQueAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.DoubtQuestionModel;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -118,6 +121,11 @@ public class AskDoctorFragment extends Fragment {
                 }
             }
         });
+
+        MobileAds.initialize(requireContext());
+        AdView adView = root.findViewById(R.id.ask_doctor_ads);
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setVisibility(View.VISIBLE);
 
         return root;
     }

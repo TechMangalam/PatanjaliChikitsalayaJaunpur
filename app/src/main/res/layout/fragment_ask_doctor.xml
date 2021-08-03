@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.AskDoctor.AskDoctorFragment">
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/ask_doctor_ads"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+    <!-- test id-  ca-app-pub-3940256099942544/6300978111
+    ad id - ca-app-pub-8103108161786269/8466833136 -->
+
     <Spinner
         android:id="@+id/switch_question_type_spinner"
         android:elevation="16dp"
@@ -14,6 +26,7 @@
         android:spinnerMode="dialog"
         android:popupBackground="@android:color/white"
         android:padding="2dp"
+        android:layout_below="@id/ask_doctor_ads"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="30dp"/>

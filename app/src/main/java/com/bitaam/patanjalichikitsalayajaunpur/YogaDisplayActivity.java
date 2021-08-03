@@ -40,6 +40,7 @@ public class YogaDisplayActivity extends AppCompatActivity {
     //InterstitialAd interstitialAd;
     AdRequest adRequest;
     ProgressBar progressBar;
+    YogaModal yogaModal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class YogaDisplayActivity extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext());
 
         Intent intent = getIntent();
-        YogaModal yogaModal = (YogaModal) intent.getSerializableExtra("yogaInfo");
+        yogaModal = (YogaModal) intent.getSerializableExtra("yogaInfo");
 
         scrollView = findViewById(R.id.scrollContentView);
         toolbar = findViewById(R.id.toolbarYoga);
@@ -96,7 +97,7 @@ public class YogaDisplayActivity extends AppCompatActivity {
             howH.setText(yogaModal.getHowH());
             notE.setText(yogaModal.getNotE());
             notH.setText(yogaModal.getNotH());
-            loadVid(checkForLink(yogaModal.getVid()));
+//            loadVid(checkForLink(yogaModal.getVid()));
         }else{
             Toast.makeText(this, "Go back and reopen to refresh", Toast.LENGTH_LONG).show();
         }
@@ -174,6 +175,21 @@ public class YogaDisplayActivity extends AppCompatActivity {
 
         return html;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadVid(checkForLink(yogaModal.getVid()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        yogaVideo.loadUrl("");
+        yogaVideo.clearCache(true);
+    }
+
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {

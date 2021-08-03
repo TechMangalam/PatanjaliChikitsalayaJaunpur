@@ -104,7 +104,7 @@
         android:layout_below="@+id/question"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
-        app:viewAspectRatio="1.33"
+        app:viewAspectRatio="1.5"
         android:layout_height="wrap_content" />
 
 

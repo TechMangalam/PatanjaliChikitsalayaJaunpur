@@ -39,6 +39,7 @@ public class NuskeDisplayActivity extends AppCompatActivity {
     //InterstitialAd interstitialAd;
     AdRequest adRequest;
     ProgressBar progressBar;
+    NuskeModal nuskeModal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class NuskeDisplayActivity extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext());
 
         Intent intent = getIntent();
-        NuskeModal nuskeModal = (NuskeModal) intent.getSerializableExtra("nuskeInfo");
+        nuskeModal = (NuskeModal) intent.getSerializableExtra("nuskeInfo");
 
         scrollView = findViewById(R.id.scrollContentView);
         toolbar = findViewById(R.id.toolbarYoga);
@@ -142,6 +143,20 @@ public class NuskeDisplayActivity extends AppCompatActivity {
 
         return html;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadVid(checkForLink(nuskeModal.getVid()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        yogaVideo.loadUrl("");
+        yogaVideo.clearCache(true);
+    }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {

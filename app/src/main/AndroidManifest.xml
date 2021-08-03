@@ -29,7 +29,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity android:name=".YogaSessionsListActivity" />
-        <activity android:name=".NuskeDisplayActivity" />
+        <activity
+            android:name=".NuskeDisplayActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:supportsPictureInPicture="true"
+            tools:targetApi="24" />
         <activity android:name=".AddNuskeActivity" />
         <activity
             android:name=".YogaTrackingActivity"
@@ -56,7 +60,11 @@
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".UpcharDisplayActivity" />
+        <activity
+            android:name=".UpcharDisplayActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:supportsPictureInPicture="true"
+            tools:targetApi="24" />
         <activity
             android:name=".YogaDisplayActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

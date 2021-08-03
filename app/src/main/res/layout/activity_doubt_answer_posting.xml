@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <!-- TODO: Update blank fragment layout -->
-
 
         <RelativeLayout
             android:layout_below="@id/toolbarCommunity"
@@ -41,7 +39,6 @@
                 android:padding="10dp"
                 android:elevation="10dp"
                 android:textSize="18sp"
-                android:gravity="top|left"
                 android:hint="Type your Comment here"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -49,30 +46,27 @@
 
 
             <ImageView
-                android:background="@drawable/black_05dp_square_border"
                 android:id="@+id/queImg"
                 android:visibility="gone"
                 android:layout_marginBottom="5dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_below="@+id/question"
                 android:layout_width="match_parent"
-                android:layout_height="270dp" />
+                android:layout_height="250dp" />
 
             <ProgressBar
                 android:id="@+id/queImgPro"
                 android:layout_below="@+id/question"
                 android:layout_centerHorizontal="true"
                 android:visibility="gone"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="130dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:id="@+id/funcLayout"
-                android:layout_marginTop="0dp"
                 android:layout_marginBottom="5dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:weightSum="2"
+                android:paddingHorizontal="10dp"
                 android:orientation="horizontal"
                 android:layout_below="@+id/queImg"
                 android:layout_width="match_parent"
@@ -81,47 +75,56 @@
                 <TextView
                     android:background="@drawable/black_05dp_square_border"
                     android:padding="10dp"
-                    android:drawableEnd="@drawable/ic_baseline_send_24"
                     android:drawablePadding="5dp"
-                    android:layout_weight="1"
+                    android:layout_weight="50"
                     android:id="@+id/postQue"
                     android:text="Post Comment"
                     android:singleLine="true"
                     android:textAlignment="textStart"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:drawableEndCompat="@drawable/ic_baseline_send_24" />
 
                 <TextView
                     android:background="@drawable/black_05dp_square_border"
                     android:padding="10dp"
-                    android:drawableEnd="@drawable/ic_baseline_attachment_24"
                     android:drawablePadding="5dp"
-                    android:layout_weight="1"
+                    android:layout_weight="50"
                     android:id="@+id/attachImg"
                     android:text="Attach Image"
                     android:singleLine="true"
                     android:textAlignment="textStart"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    app:drawableEndCompat="@drawable/ic_baseline_attachment_24" />
 
             </LinearLayout>
 
 
         </RelativeLayout>
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ansLayout"
+        android:visibility="gone"
+        android:id="@+id/ask_doctor_ans_ads"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
 
         <TextView
             android:id="@+id/showHide"
-            android:text="Hide and see all Comments"
+            android:text="@string/hide_and_see_all_comments"
             android:drawablePadding="10dp"
-            android:layout_below="@+id/ansLayout"
+            android:layout_below="@+id/ask_doctor_ans_ads"
             android:textColor="@android:color/black"
             android:padding="10dp"
             android:elevation="16dp"
             android:textSize="18sp"
-            android:layout_centerHorizontal="true"
             android:background="?attr/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

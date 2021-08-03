@@ -26,6 +26,9 @@ import android.widget.Toast;
 
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.DoubtAnsAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.DoubtQuestionModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -120,6 +123,10 @@ public class DoubtAnswerPosting extends AppCompatActivity {
 
         clickEventAll();
 
+        MobileAds.initialize(this);
+        AdView adView = findViewById(R.id.ask_doctor_ans_ads);
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setVisibility(View.VISIBLE);
 
     }
 
@@ -129,6 +136,9 @@ public class DoubtAnswerPosting extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (attach.getText().equals("Attach Image")){
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent,1000);
                     attach.setText("Remove Image");
@@ -139,6 +149,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                         fileRef.delete();
                     }
                     queImgUrls = "na";
+                    filesInByte = null;
                     queImg.setImageURI(null);
                     queImg.setVisibility(View.GONE);
                     attach.setText("Attach Image");
@@ -151,15 +162,20 @@ public class DoubtAnswerPosting extends AppCompatActivity {
             public void onClick(View v) {
                 post.setEnabled(true);
 
-                postComment();
-                question.setText(null);
-                queImg.setImageURI(null);
-                queImg.setVisibility(View.GONE);
-                queImgUrls = null;
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-                Toast.makeText(getApplicationContext(),"Comment posted successfully",Toast.LENGTH_SHORT).show();
+                if (filesInByte != null){
+                    uploadImageToFirebase(filesInByte);
+                }else{
+                    postComment();
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+//                question.setText(null);
+//                queImg.setImageURI(null);
+//                queImg.setVisibility(View.GONE);
+//                queImgUrls = null;
+//                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//
+//                imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+//                Toast.makeText(getApplicationContext(),"Comment posted successfully",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -259,9 +275,41 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         String poDat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
         //new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault()).format(new Date())
         String que = question.getText().toString().trim();
+        if (que.isEmpty()){
+            question.setError("Empty comment not allowed");
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
         String queUrl = queImgUrls;
 
-        databaseReference.push().setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,true,user.getUid()));
+        databaseReference.push().setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,true,user.getUid()))
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                progressBar.setVisibility(View.GONE);
+                question.setText(null);
+                queImg.setImageURI(null);
+                queImg.setVisibility(View.GONE);
+                queImgUrls = null;
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+                Toast.makeText(DoubtAnswerPosting.this, "Commented successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.GONE);
+                question.setText(null);
+                queImg.setImageURI(null);
+                queImg.setVisibility(View.GONE);
+                queImgUrls = null;
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+                Toast.makeText(DoubtAnswerPosting.this, "Failed! Retry", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -359,13 +407,15 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                 queImg.setVisibility(View.VISIBLE);
 
                 queImg.setImageURI(imgUri);
+                progressBar.setVisibility(View.GONE);
 
-                uploadImageToFirebase(fileInBytes);
+                //uploadImageToFirebase(fileInBytes);
             }
         }
     }
 
     private void uploadImageToFirebase(byte[] fileInBytes) {
+        progressBar.setVisibility(View.VISIBLE);
 
         String imgId = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.getDefault()).format(new Date())+""+FirebaseAuth.getInstance().getCurrentUser().getUid().toString()+".jpg";
         ImgId = imgId;
@@ -379,9 +429,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         queImgUrls = uri.toString();
-                        Picasso.get().load(uri)
-                                .into(queImg);
-                        progressBar.setVisibility(View.GONE);
+                        postComment();
                     }
                 });
             }
