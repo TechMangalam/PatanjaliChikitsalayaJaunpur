@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ import java.util.Locale;
 
 public class DoubtAnswerPosting extends AppCompatActivity {
 
-    TextView post,attach,postDate,showHide;
+    TextView post,attach,postDate,showHide,rotateImgTv;
     EditText question;
     ImageView queImg;
     ProgressBar progressBar;
@@ -67,6 +68,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
     RecyclerView doubtCommentRecycler;
     DoubtAnsAdapter doubtAnsAdapter;
     byte[] filesInByte;
+    Bitmap qImg;
     String ImgId;
     ArrayList<String> commentIds = new ArrayList<>();
 
@@ -89,6 +91,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         showHide = findViewById(R.id.showHide);
         ansLayout = findViewById(R.id.ansLayout);
         ansLayout.setVisibility(View.VISIBLE);
+        rotateImgTv = findViewById(R.id.rotateImageTv);
 
         Bundle bundle = getIntent().getExtras();
         QiD = bundle.getString("qId");
@@ -144,13 +147,15 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                     attach.setText("Remove Image");
                 }else if (attach.getText().equals("Remove Image")){
 
-                    StorageReference fileRef = FirebaseStorage.getInstance().getReference("Images").child(ImgId);
-                    if (fileRef!=null){
-                        fileRef.delete();
-                    }
+//                    StorageReference fileRef = FirebaseStorage.getInstance().getReference("Images").child(ImgId);
+//                    if (fileRef!=null){
+//                        fileRef.delete();
+//                    }
                     queImgUrls = "na";
                     filesInByte = null;
+                    qImg = null;
                     queImg.setImageURI(null);
+                    rotateImgTv.setVisibility(View.GONE);
                     queImg.setVisibility(View.GONE);
                     attach.setText("Attach Image");
                 }
@@ -204,6 +209,13 @@ public class DoubtAnswerPosting extends AppCompatActivity {
             @Override
             public void onLiked(int position) {
                 likeCounter(position);
+            }
+        });
+
+        rotateImgTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qImg = rotateImage(qImg,90);
             }
         });
 
@@ -290,6 +302,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                 question.setText(null);
                 queImg.setImageURI(null);
                 queImg.setVisibility(View.GONE);
+                rotateImgTv.setVisibility(View.GONE);
                 queImgUrls = null;
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -303,6 +316,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                 question.setText(null);
                 queImg.setImageURI(null);
                 queImg.setVisibility(View.GONE);
+                rotateImgTv.setVisibility(View.GONE);
                 queImgUrls = null;
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -398,20 +412,40 @@ public class DoubtAnswerPosting extends AppCompatActivity {
                 Bitmap bmp = null;
                 try{
                     bmp = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+                    qImg = bmp;
                 }catch (Exception e){}
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
-                byte[] fileInBytes = baos.toByteArray();
-                filesInByte = baos.toByteArray();
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+//                byte[] fileInBytes = baos.toByteArray();
+                filesInByte = compressImg(qImg);
 
                 queImg.setVisibility(View.VISIBLE);
+                rotateImgTv.setVisibility(View.VISIBLE);
 
-                queImg.setImageURI(imgUri);
+                queImg.setImageBitmap(qImg);
                 progressBar.setVisibility(View.GONE);
 
                 //uploadImageToFirebase(fileInBytes);
             }
         }
+    }
+
+    private Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        filesInByte = null;
+        filesInByte = compressImg(rotatedImg);
+        queImg.setImageBitmap(rotatedImg);
+        return rotatedImg;
+    }
+
+    private byte[] compressImg(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+        byte[] fileInBytes = baos.toByteArray();
+        //filesInByte = baos.toByteArray();
+        return fileInBytes;
     }
 
     private void uploadImageToFirebase(byte[] fileInBytes) {
@@ -437,6 +471,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 queImg.setVisibility(View.GONE);
+                rotateImgTv.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
                 queImgUrls = null;
                 queImg.setImageURI(null);

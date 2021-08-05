@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.bitaam.patanjalichikitsalayajaunpur.modals.PatientModel;
 import com.bitaam.patanjalichikitsalayajaunpur.utility.FullscreenActivity;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.api.Advice;
 import com.squareup.picasso.Picasso;
 
 public class ShowPatientDetailActivity extends AppCompatActivity {
@@ -18,6 +22,7 @@ public class ShowPatientDetailActivity extends AppCompatActivity {
     TextView dateTv,hospitalTv,doctorTv,nameTv,mobileNoTv,genderTv,diseaseTv;
     ImageView reportImgView;
     PatientModel patientModel;
+    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,13 @@ public class ShowPatientDetailActivity extends AppCompatActivity {
         genderTv = findViewById(R.id.genderTitle);
         diseaseTv = findViewById(R.id.diseaseTv);
         reportImgView = findViewById(R.id.reportImgView);
+        adView = findViewById(R.id.patient_list_ads);
 
         displayPatientData(patientModel);
+
+        MobileAds.initialize(this);
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setVisibility(View.VISIBLE);
 
     }
 

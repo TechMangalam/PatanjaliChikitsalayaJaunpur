@@ -41,5 +41,6 @@
     <string name="click_on_image_to_open_in_large">Click on image to open in large</string>
     <string name="view_your_checkup_records_information_about_patient_and_medicine_report">View your checkup records, information about patient and medicine report.</string>
     <string name="hide_and_see_all_comments">Hide and see all Comments</string>
+    <string name="askquestion">AskQuestion</string>
 
 </resources>

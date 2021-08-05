@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,13 +54,14 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
 
     private ImageView imageview;
     private Button btnSelectImage,submitBtn;
-    TextView currentDateTimeTxtView,hospitalTv,doctorTv;
+    TextView currentDateTimeTxtView,hospitalTv,doctorTv,rotateImgTv;
     EditText nameEdt,phoneNoEdt,diseaseEdt;
     Spinner genderSpinner;
     String imgLink="";
     String ImgId,shop_name,doctor_name;
     String currDateTime;
     byte[] filesInBytes;
+    Bitmap qImg;
     AlertDialog.Builder builder;
 
     @Override
@@ -80,6 +82,7 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
         doctorTv = findViewById(R.id.doctorTxtView);
         genderSpinner = findViewById(R.id.jobMenu);
         diseaseEdt = findViewById(R.id.diseaseEdt);
+        rotateImgTv = findViewById(R.id.rotateImageTv);
         currDateTime = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.getDefault()).format(new Date())+"";
         currentDateTimeTxtView.setText("Date & Time - "+currDateTime );
 
@@ -110,8 +113,18 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
                     btnSelectImage.setText("Change Report");
                 }else{
                     imageview.setVisibility(View.GONE);
+                    rotateImgTv.setVisibility(View.GONE);
+                    filesInBytes = null;
                     btnSelectImage.setText("Upload Report");
+                    submitBtn.setEnabled(false);
                 }
+            }
+        });
+
+        rotateImgTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qImg = rotateImage(qImg,90);
             }
         });
 
@@ -124,7 +137,23 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
 
     }
 
+    private Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        filesInBytes = null;
+        filesInBytes = compressImg(rotatedImg);
+        imageview.setImageBitmap(rotatedImg);
+        return rotatedImg;
+    }
 
+    private byte[] compressImg(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+        byte[] fileInBytes = baos.toByteArray();
+        //filesInByte = baos.toByteArray();
+        return fileInBytes;
+    }
 
     private void uploadImageToFirebase(byte[] fileInBytes) {
 
@@ -150,6 +179,9 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
             @Override
             public void onFailure(@NonNull Exception e) {
                 imageview.setVisibility(View.GONE);
+                rotateImgTv.setVisibility(View.GONE);
+                btnSelectImage.setText("Upload Report");
+                submitBtn.setEnabled(false);
                 imageview.setImageURI(null);
                 imgLink = null;
                 //progressDialog.dismiss();
@@ -223,6 +255,11 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                imageview.setVisibility(View.GONE);
+                rotateImgTv.setVisibility(View.GONE);
+                btnSelectImage.setText("Upload Report");
+                imageview.setImageURI(null);
+                submitBtn.setEnabled(false);
                 Toast.makeText(PatientManagementActivity.this, "Try again!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -232,14 +269,14 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
 
     public void AlertExit(){
 
-        builder.setMessage("Added Successfully! Do you want to edit or exit?").setTitle("Confirmation")
-                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+        builder.setMessage("Patient record added Successfully!").setTitle("Confirmation")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
 
                     }
-                }).setNegativeButton("Edit",null).setCancelable(false);
+                }).setCancelable(false);
 
 
 
@@ -255,14 +292,15 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
                 Bitmap bmp = null;
                 try{
                     bmp = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+                    qImg = bmp;
                 }catch (Exception e){}
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
-                //byte[] fileInBytes = baos.toByteArray();
-                filesInBytes = baos.toByteArray();
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+//                //byte[] fileInBytes = baos.toByteArray();
+                filesInBytes = compressImg(qImg);
                 imageview.setVisibility(View.VISIBLE);
-
-                imageview.setImageURI(imgUri);
+                rotateImgTv.setVisibility(View.VISIBLE);
+                imageview.setImageBitmap(qImg);
 
                 submitBtn.setEnabled(true);
 

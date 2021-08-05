@@ -76,13 +76,28 @@
 
 
             <ImageView
-                android:background="@drawable/black_05dp_square_border"
                 android:id="@+id/queImg"
                 android:visibility="gone"
                 android:layout_marginBottom="5dp"
                 android:layout_below="@+id/text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="400dp" />
+
+            <TextView
+                android:id="@+id/rotateImageTv"
+                android:layout_alignBottom="@id/queImg"                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:elevation="10dp"
+                android:text="Rotate"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableTopCompat="@drawable/ic_baseline_rotate_90_degrees_ccw_24" />
+
 
             <ProgressBar
                 android:id="@+id/queImgPro"

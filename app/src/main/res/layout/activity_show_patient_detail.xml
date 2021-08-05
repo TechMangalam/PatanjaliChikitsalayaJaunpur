@@ -15,8 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ScrollView
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbarAddPatient"
+        android:visibility="gone"
+        android:id="@+id/patient_list_ads"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+
+    <!-- test id-  ca-app-pub-3940256099942544/6300978111
+    ad id - ca-app-pub-8103108161786269/8466833136 -->
+
+    <ScrollView
+        android:layout_below="@id/patient_list_ads"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
