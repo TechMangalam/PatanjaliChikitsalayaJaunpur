@@ -17,6 +17,7 @@ import com.bitaam.patanjalichikitsalayajaunpur.AddUpcharActivity;
 import com.bitaam.patanjalichikitsalayajaunpur.R;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.UpcharAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.UpcharModal;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,8 @@ public class UpcharFragment extends Fragment {
     DatabaseReference databaseReference;
 
     FloatingActionButton addUpcharActionBtn;
-    String role="";
+    String role="User";
+    UserModal userModal;
 
     View parentView;
 
@@ -49,7 +51,9 @@ public class UpcharFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_upchar, container, false);
 
         assert getArguments() != null;
-        role = getArguments().getString("UserRole");
+        userModal = (UserModal) getArguments().getSerializable("UserInfo");
+        assert userModal != null;
+        role = userModal.getRole();
 
 
 

@@ -21,6 +21,7 @@ import com.bitaam.patanjalichikitsalayajaunpur.AddYogaActivity;
 import com.bitaam.patanjalichikitsalayajaunpur.R;
 import com.bitaam.patanjalichikitsalayajaunpur.TopicAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.YogaAdapter;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.YogaModal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +42,8 @@ public class YogaFragment extends Fragment {
     DatabaseReference databaseReference;
 
     FloatingActionButton addYogaActionBtn;
-    String role="";
+    String role="User";
+    UserModal userModal;
 
     View parentView;
 
@@ -58,7 +60,9 @@ public class YogaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_yoga, container, false);
 
         assert getArguments() != null;
-        role = getArguments().getString("UserRole");
+        userModal = (UserModal) getArguments().getSerializable("UserInfo");
+        assert userModal != null;
+        role = userModal.getRole();
 
         yogaRecycler = view.findViewById(R.id.yogaRecycler);
         yogaRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -35,6 +35,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class SignInActivity extends AppCompatActivity {
@@ -184,12 +185,12 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            setUserProfile("user",nameEdt.getText().toString(),phoneEdt.getText().toString());
+                            setUserProfile(Objects.requireNonNull(nameEdt.getText()).toString(), Objects.requireNonNull(phoneEdt.getText()).toString());
 
                         } else {
                             // if the code is not correct then we are
                             // displaying an error message to the user.
-                            Toast.makeText(getApplicationContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -251,14 +252,16 @@ public class SignInActivity extends AppCompatActivity {
 //
 //    }
 
-    private void setUserProfile(String role,String name,String phone){
+    private void setUserProfile(String name,String phone){
 
         UserModal userModal = new UserModal();
         userModal.setName(name);
         userModal.setPhone(phone);
-        userModal.setRole(role);
-        userModal.setDoctorStatus("Not available");
-        userModal.setShopStatus("Closed");
+        userModal.setRole("User");
+        userModal.setQualification("na");
+        userModal.setShopName("na");
+        userModal.setVerified(false);
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 

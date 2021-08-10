@@ -31,16 +31,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <!--<SearchView
-                        android:id="@+id/itemSearchView"
-                        android:searchIcon="@drawable/ic_baseline_search_24"
-                        android:queryHint="Enter item name to search"
-                        android:layout_alignParentEnd="true"
-                        android:gravity="bottom"
-                        android:padding="0dp"
-                        android:closeIcon="@drawable/ic_baseline_close_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>-->
 
                     <ImageView
                         android:id="@+id/item_home_imgview"

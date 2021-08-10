@@ -71,7 +71,9 @@ public class AskDoctorFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_ask_doctor, container, false);
 
         assert getArguments() != null;
-        role = getArguments().getString("UserRole");
+        currUserInfo = (UserModal)getArguments().getSerializable("UserInfo");
+        assert currUserInfo != null;
+        role = currUserInfo.getRole();
 
         globalRecycler = root.findViewById(R.id.queChatRecycler);
 
@@ -195,41 +197,6 @@ public class AskDoctorFragment extends Fragment {
 
     }
 
-    private void getUserInfo(){
-
-
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                currUserInfo = snapshot.child(uid).getValue(UserModal.class);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
     private void upvoting(String qId) {
 
 
@@ -251,13 +218,10 @@ public class AskDoctorFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getUserInfo();
-        //databaseActivity(true);
         onClickEvents();
     }
 
     public void databaseActivity(Boolean type) {
-
 
         doubtQueAdapter = new DoubtQueAdapter(globalRecycler, getContext(), new ArrayList<DoubtQuestionModel>());
 
@@ -276,6 +240,7 @@ public class AskDoctorFragment extends Fragment {
                 Intent intent = new Intent(getContext(), DoubtAnswerPosting.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("qId", queId.get(position));
+                bundle.putSerializable("UserInfo",currUserInfo);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -294,7 +259,6 @@ public class AskDoctorFragment extends Fragment {
         });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Community").child("doubts");
-        databaseReference.keepSynced(true);
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

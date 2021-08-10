@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.DoubtAnsAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.DoubtQuestionModel;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -39,6 +40,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -50,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DoubtAnswerPosting extends AppCompatActivity {
 
@@ -70,7 +73,9 @@ public class DoubtAnswerPosting extends AppCompatActivity {
     byte[] filesInByte;
     Bitmap qImg;
     String ImgId;
-    ArrayList<String> commentIds = new ArrayList<>();
+    FirebaseAuth auth;
+    UserModal userModal;
+    boolean verified=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +99,13 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         rotateImgTv = findViewById(R.id.rotateImageTv);
 
         Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
         QiD = bundle.getString("qId");
+        userModal = (UserModal)bundle.getSerializable("UserInfo");
+        assert userModal != null;
+        verified = userModal.isVerified();
+
+        auth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Community").child("doubts").child(QiD).child("Comments");
         storageReference = FirebaseStorage.getInstance().getReference("ProfileImages");
@@ -103,15 +114,12 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         imgUrlProf = "na";
 
         StorageReference ref = storageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()+".jpg");
-        if (ref != null){
-            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    imgUrlProf = uri.toString();
-                }
-            });
-        }
-
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imgUrlProf = uri.toString();
+            }
+        });
 
 
         doubtCommentRecycler = findViewById(R.id.commentRecycler);
@@ -205,13 +213,6 @@ public class DoubtAnswerPosting extends AppCompatActivity {
             }
         });
 
-        doubtAnsAdapter.setOnItemClickListener(new DoubtAnsAdapter.OnItemClickListener() {
-            @Override
-            public void onLiked(int position) {
-                likeCounter(position);
-            }
-        });
-
         rotateImgTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,63 +221,6 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         });
 
 
-    }
-
-    private void likeCounter(final int position) {
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Community")
-                .child("doubts").child(QiD).child("Comments");
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getKey().equals(commentIds.get(position))){
-                    if (snapshot.hasChild("nLikes")){
-                        if (snapshot.child("nLikes").hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            Toast.makeText(getApplicationContext(),"Already Liked !",Toast.LENGTH_SHORT).show();
-                            return;
-                        }else{
-                                liked(position,databaseReference);
-                                databaseReference.child(commentIds.get(position)).child("nLikes")
-                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(1);
-                        }
-                    }else{
-                        liked(position,databaseReference);
-                        databaseReference.child(commentIds.get(position)).child("nLikes")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(1);
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-    }
-
-    private void liked(int position, DatabaseReference databaseReference) {
-        databaseReference.child(commentIds.get(position)).child("nLikes").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(1);
-        Toast.makeText(getApplicationContext(),"Liked !",Toast.LENGTH_SHORT).show();
-        doubtAnsAdapter.notifyDataSetChanged();
     }
 
     private void postComment() {
@@ -294,7 +238,7 @@ public class DoubtAnswerPosting extends AppCompatActivity {
         }
         String queUrl = queImgUrls;
 
-        databaseReference.push().setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,true,user.getUid()))
+        databaseReference.push().setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,true,user.getUid(),verified))
         .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -336,68 +280,43 @@ public class DoubtAnswerPosting extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Community")
                 .child("doubts").child(QiD).child("Comments");
-        if (databaseReference != null) {
 
-            databaseReference.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                    long nLikes = 0;
-                    if (snapshot.hasChild("nLikes")){
-                        nLikes = snapshot.child("nLikes").getChildrenCount();
-                    }
+                DoubtQuestionModel doubtQuestionModel = snapshot.getValue(DoubtQuestionModel.class); //new DoubtQuestionModel();
+//                doubtQuestionModel.setName((String) snapshot.child("name").getValue());
+//                doubtQuestionModel.setProfileImgUrl((String) snapshot.child("profileImgUrl").getValue());
+//                doubtQuestionModel.setPostDate((String) snapshot.child("postDate").getValue());
+//                doubtQuestionModel.setQue((String) snapshot.child("que").getValue());
+//                doubtQuestionModel.setQueImgUrl((String) snapshot.child("queImgUrl").getValue());
 
-                    commentIds.add(snapshot.getKey());
-
-                    DoubtQuestionModel doubtQuestionModel = new DoubtQuestionModel();
-                    doubtQuestionModel.setName((String) snapshot.child("name").getValue());
-                    doubtQuestionModel.setProfileImgUrl((String) snapshot.child("profileImgUrl").getValue());
-                    doubtQuestionModel.setPostDate((String) snapshot.child("postDate").getValue());
-                    doubtQuestionModel.setQue((String) snapshot.child("que").getValue());
-                    doubtQuestionModel.setQueImgUrl((String) snapshot.child("queImgUrl").getValue());
-
-                    ((DoubtAnsAdapter) doubtCommentRecycler.getAdapter()).update(doubtQuestionModel,nLikes);
+                ((DoubtAnsAdapter) Objects.requireNonNull(doubtCommentRecycler.getAdapter())).update(doubtQuestionModel);
 
 
-                }
+            }
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                    long nLikes = 0;
-                    if (snapshot.hasChild("nLikes")){
-                        nLikes = snapshot.child("nLikes").getChildrenCount();
-                    }
+            }
 
-                    commentIds.add(snapshot.getKey());
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-                    DoubtQuestionModel doubtQuestionModel = new DoubtQuestionModel();
-                    doubtQuestionModel.setName((String) snapshot.child("name").getValue());
-                    doubtQuestionModel.setProfileImgUrl((String) snapshot.child("profileImgUrl").getValue());
-                    doubtQuestionModel.setPostDate((String) snapshot.child("postDate").getValue());
-                    doubtQuestionModel.setQue((String) snapshot.child("que").getValue());
-                    doubtQuestionModel.setQueImgUrl((String) snapshot.child("queImgUrl").getValue());
+            }
 
-                    ((DoubtAnsAdapter) doubtCommentRecycler.getAdapter()).update(doubtQuestionModel,nLikes);
-                }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
 
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
+            }
+        });
 
 
     }

@@ -65,7 +65,6 @@ dependencies {
     implementation 'com.cleveroad:fan-layout-manager:1.0.5'
     implementation 'com.synnapps:carouselview:0.1.4'
     implementation 'com.commit451:PhotoView:1.2.4'
-    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.1'
 
 
 }

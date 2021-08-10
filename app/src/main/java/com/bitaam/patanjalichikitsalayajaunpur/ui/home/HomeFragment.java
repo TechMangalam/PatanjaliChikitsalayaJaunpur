@@ -66,13 +66,10 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
-    //UserModal userModal;
-    TextView shopName;
+    UserModal userModal;
     RecyclerView dailyYogRecycler,generalUpcharRecycler;
-    //int counter = 0;
     CardView itemSearchCard,yogaSessionCard;
     FloatingActionButton addPatientActionBtn;
-    UserModal userModal;
     CarouselView carouselView;
     View parentView;
     ScrollView homeScroll;
@@ -96,17 +93,12 @@ public class HomeFragment extends Fragment {
         yogaSessionCard = root.findViewById(R.id.yogaSessionCard);
         infoImgUrls = new ArrayList<>();
         sharedPreferences = requireActivity().getSharedPreferences("HomeInfo", Context.MODE_PRIVATE);
-//        if (sharedPreferences.contains("img1")){
-            infoImgUrls.add(sharedPreferences.getString("img1","https://cdn.dnaindia.com/sites/default/files/styles/full/public/2019/10/04/873153-ayurveda-istock.jpg"));
-            infoImgUrls.add(sharedPreferences.getString("img2","https://www.kindpng.com/picc/m/103-1032545_nature-of-patient-and-doctor-hd-png-download.png"));
-            infoImgUrls.add(sharedPreferences.getString("img3","https://akm-img-a-in.tosshub.com/indiatoday/sunsetyoga-2_647_062115121022.jpg?Q7x3aPFYhLV6E2CgD7oXmSdjoh5wnAiq&size=1200:675"));
-            infoImgUrls.add(sharedPreferences.getString("img4","https://innohealthmagazine.com/wp-content/uploads/2017/11/Ayurveda-Mothe-of-all-healings.jpg"));
-//        }else{
-//            infoImgUrls.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2019/10/04/873153-ayurveda-istock.jpg");
-//            infoImgUrls.add("https://www.kindpng.com/picc/m/103-1032545_nature-of-patient-and-doctor-hd-png-download.png");
-//            infoImgUrls.add("https://akm-img-a-in.tosshub.com/indiatoday/sunsetyoga-2_647_062115121022.jpg?Q7x3aPFYhLV6E2CgD7oXmSdjoh5wnAiq&size=1200:675");
-//            infoImgUrls.add("https://innohealthmagazine.com/wp-content/uploads/2017/11/Ayurveda-Mothe-of-all-healings.jpg");
-//        }
+
+        infoImgUrls.add(sharedPreferences.getString("img1","https://cdn.dnaindia.com/sites/default/files/styles/full/public/2019/10/04/873153-ayurveda-istock.jpg"));
+        infoImgUrls.add(sharedPreferences.getString("img2","https://www.kindpng.com/picc/m/103-1032545_nature-of-patient-and-doctor-hd-png-download.png"));
+        infoImgUrls.add(sharedPreferences.getString("img3","https://akm-img-a-in.tosshub.com/indiatoday/sunsetyoga-2_647_062115121022.jpg?Q7x3aPFYhLV6E2CgD7oXmSdjoh5wnAiq&size=1200:675"));
+        infoImgUrls.add(sharedPreferences.getString("img4","https://innohealthmagazine.com/wp-content/uploads/2017/11/Ayurveda-Mothe-of-all-healings.jpg"));
+
 
         carouselView = root.findViewById(R.id.carouselView);
         carouselView.setPageCount(infoImgUrls.size());
@@ -128,15 +120,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-        /*FanLayoutManagerSettings fanLayoutManagerSettings = FanLayoutManagerSettings
-                .newBuilder(getContext())
-                .withFanRadius(false)
-                .withAngleItemBounce(0)
-                .withViewWidthDp(500).withViewHeightDp(500)
-                .build();*/
-
-        //FanLayoutManager fanLayoutManager = new FanLayoutManager(getContext(),fanLayoutManagerSettings);
 
         dailyYogRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
@@ -181,7 +164,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), YogaSessionsListActivity.class);
-                intent.putExtra("UserRole","User");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -202,7 +184,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), PatientManagementActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("shopName","Patanjali Chikitsalaya Jaunpur");
+                intent.putExtra("UserInfo",userModal);
                 startActivity(intent);
             }
         });
@@ -308,23 +290,20 @@ public class HomeFragment extends Fragment {
     }
 
     private void getUserInfo(){
-
-
         final String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid);
-
+        databaseReference.keepSynced(true);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userModal = snapshot.getValue(UserModal.class);
-                assert userModal != null;
+                Log.e("userInfo",snapshot.getValue().toString());
                 if (userModal.getRole().equals("Doctor or Vaidya") || userModal.getRole().equals("Developer")){
                     addPatientActionBtn.setVisibility(View.VISIBLE);
                 }
 
                 if(userModal.getRole().equals("Patanjali Chikitsalaya or store")){
-                    shopName.setText(userModal.getName());
                     addPatientActionBtn.setVisibility(View.VISIBLE);
                 }
             }
@@ -334,6 +313,17 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+//        assert getArguments() != null;
+//        userModal = (UserModal)getArguments().getSerializable("UserInfo");
+//        assert userModal != null;
+//        if (userModal.getRole().equals("Doctor or Vaidya") || userModal.getRole().equals("Developer")){
+//            addPatientActionBtn.setVisibility(View.VISIBLE);
+//        }
+//
+//        if(userModal.getRole().equals("Patanjali Chikitsalaya or store")){
+//            addPatientActionBtn.setVisibility(View.VISIBLE);
+//        }
 
     }
 

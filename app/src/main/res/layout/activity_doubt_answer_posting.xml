@@ -139,7 +139,7 @@
             android:layout_below="@+id/ask_doctor_ans_ads"
             android:textColor="@android:color/black"
             android:padding="10dp"
-            android:elevation="16dp"
+            android:elevation="10dp"
             android:textSize="18sp"
             android:background="?attr/colorPrimary"
             android:layout_width="match_parent"

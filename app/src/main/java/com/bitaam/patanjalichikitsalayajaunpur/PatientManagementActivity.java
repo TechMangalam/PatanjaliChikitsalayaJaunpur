@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitaam.patanjalichikitsalayajaunpur.modals.PatientModel;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,18 +61,22 @@ public class PatientManagementActivity extends AppCompatActivity implements Adap
     Spinner genderSpinner;
     String imgLink="";
     String ImgId,shop_name,doctor_name;
+    UserModal userModal;
     String currDateTime;
     byte[] filesInBytes;
     Bitmap qImg;
     AlertDialog.Builder builder;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_management);
 
         Intent intent = getIntent();
-        shop_name = intent.getStringExtra("shopName");
+        userModal = (UserModal) intent.getSerializableExtra("UserInfo");
+        assert userModal != null;
+        shop_name = userModal.getShopName();
 
         imageview = findViewById(R.id.reportImgView);
         btnSelectImage = findViewById(R.id.uploadReportBtn);

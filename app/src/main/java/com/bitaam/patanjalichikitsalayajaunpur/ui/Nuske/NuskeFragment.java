@@ -19,6 +19,7 @@ import com.bitaam.patanjalichikitsalayajaunpur.R;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.NuskeAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.YogaAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.NuskeModal;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.YogaModal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -36,7 +37,8 @@ public class NuskeFragment extends Fragment {
     RecyclerView ghareluNuskeRecycler;
     DatabaseReference databaseReference;
     FloatingActionButton addNuskeActionBtn;
-    String role="";
+    String role="User";
+    UserModal userModal;
 
 
     public NuskeFragment() {
@@ -51,7 +53,9 @@ public class NuskeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nuske, container, false);
 
         assert getArguments() != null;
-        role = getArguments().getString("UserRole");
+        userModal = (UserModal) getArguments().getSerializable("UserInfo");
+        assert userModal != null;
+        role = userModal.getRole();
 
         ghareluNuskeRecycler = view.findViewById(R.id.nuskeRecycler);
         ghareluNuskeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -1,17 +1,17 @@
 package com.bitaam.patanjalichikitsalayajaunpur;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,9 +24,6 @@ import com.bitaam.patanjalichikitsalayajaunpur.ui.Nuske.NuskeFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.home.HomeFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.upchar.UpcharFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.yoga.YogaFragment;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +32,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
+
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -42,9 +43,8 @@ public class HomeActivity extends AppCompatActivity {
     Fragment active;
     boolean homeFlag = true;
     Toolbar toolbar;
-    InterstitialAd interstitialAd;
-    AdRequest adRequest;
     AlertDialog.Builder builder;
+    ProgressDialog progressDialog;
     UserModal userModal;
 
     FirebaseAuth mAuth;
@@ -64,10 +64,6 @@ public class HomeActivity extends AppCompatActivity {
 
         builder = new AlertDialog.Builder(this);
 
-
-        MobileAds.initialize(getApplicationContext());
-        adRequest = new AdRequest.Builder().build();
-
         toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
         toolbar.setTitle("My Upchar");
@@ -75,14 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         active  = new HomeFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment,active,"TAG").commit();
-
         navView.setSelectedItemId(R.id.navigation_home);
-
-        //interstitialAd = new InterstitialAd(this);
-        //interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        //test id - ca-app-pub-3940256099942544/1033173712
-        //ad id - ca-app-pub-8103108161786269/8245619086
-        //interstitialAd.loadAd(adRequest);
 
         onClickActivities();
 
@@ -137,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putString("UserRole",userModal.getRole());
+                bundle.putSerializable("UserInfo",userModal);
                 //assert fragment != null;
                 fragment.setArguments(bundle);
 
@@ -229,33 +218,18 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getUserInfo(){
 
+        progressDialogShow("Creating profile","Please wait...");
 
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(uid);
         databaseReference.keepSynced(true);
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getKey().equals(uid)){
-                    userModal = snapshot.getValue(UserModal.class);
-
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userModal = snapshot.getValue(UserModal.class);
+                Log.e("userInfo",snapshot.getValue().toString());
+                progressDialog.dismiss();
             }
 
             @Override
@@ -265,8 +239,52 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+//        databaseReference.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                if (Objects.equals(snapshot.getKey(), uid)){
+//                    userModal = snapshot.getValue(UserModal.class);
+//                    Log.e("userInfo",snapshot.getValue().toString());
+//                    progressDialog.dismiss();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
+
     }
 
 
+    private void progressDialogShow(String title,String Msg){
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(title);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(Msg);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //progressDialog.setMax(100);
+        progressDialog.show();
+
+    }
 
 }

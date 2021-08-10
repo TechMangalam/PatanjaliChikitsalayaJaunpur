@@ -168,7 +168,7 @@ public class DoubtQuestionPosting extends AppCompatActivity {
         String queUrl = queImgUrls;
         String key = databaseReference.push().getKey();
         assert key != null;
-        databaseReference.child(key).setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,visibility,user.getUid())).addOnSuccessListener(new OnSuccessListener<Void>() {
+        databaseReference.child(key).setValue(new DoubtQuestionModel(que,poDat,proUrl,queUrl,disName,visibility,user.getUid(),false)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 addToMyQuestions(key);

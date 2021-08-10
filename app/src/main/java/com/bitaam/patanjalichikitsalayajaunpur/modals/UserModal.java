@@ -4,18 +4,12 @@ import java.io.Serializable;
 
 public class UserModal implements Serializable {
 
-    String name,role,phone,shopStatus,doctorStatus;
+    String name,role,phone,shopName,qualification;
+    boolean verified;
 
     public UserModal() {
     }
 
-    public UserModal(String name, String role, String phone, String shopStatus, String doctorStatus) {
-        this.name = name;
-        this.role = role;
-        this.phone = phone;
-        this.shopStatus = shopStatus;
-        this.doctorStatus = doctorStatus;
-    }
 
     public String getName() {
         return name;
@@ -41,19 +35,27 @@ public class UserModal implements Serializable {
         this.phone = phone;
     }
 
-    public String getShopStatus() {
-        return shopStatus;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setShopStatus(String shopStatus) {
-        this.shopStatus = shopStatus;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public String getDoctorStatus() {
-        return doctorStatus;
+    public String getQualification() {
+        return qualification;
     }
 
-    public void setDoctorStatus(String doctorStatus) {
-        this.doctorStatus = doctorStatus;
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

@@ -3,12 +3,12 @@ package com.bitaam.patanjalichikitsalayajaunpur.modals;
 public class DoubtQuestionModel {
 
     String que,postDate,profileImgUrl,queImgUrl,name,auth;
-    boolean visibility;
+    boolean visibility,verified;
 
     public DoubtQuestionModel() {
     }
 
-    public DoubtQuestionModel(String que, String postDate, String profileImgUrl, String queImgUrl, String name,boolean visibility,String auth) {
+    public DoubtQuestionModel(String que, String postDate, String profileImgUrl, String queImgUrl, String name,boolean visibility,String auth,boolean verified) {
         this.que = que;
         this.postDate = postDate;
         this.profileImgUrl = profileImgUrl;
@@ -16,6 +16,15 @@ public class DoubtQuestionModel {
         this.name = name;
         this.visibility = visibility;
         this.auth = auth;
+        this.verified = verified;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public String getQue() {
