@@ -14,7 +14,7 @@
         android:visibility="gone"
         android:id="@+id/ask_doctor_ads"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+        ads:adUnitId="ca-app-pub-8103108161786269/5727550077"/>
 
     <!-- test id-  ca-app-pub-3940256099942544/6300978111
     ad id - ca-app-pub-8103108161786269/8466833136 -->

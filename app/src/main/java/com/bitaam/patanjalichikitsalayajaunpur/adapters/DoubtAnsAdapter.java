@@ -1,5 +1,6 @@
 package com.bitaam.patanjalichikitsalayajaunpur.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import com.bitaam.patanjalichikitsalayajaunpur.R;
@@ -41,6 +43,7 @@ public class DoubtAnsAdapter extends RecyclerView.Adapter<DoubtAnsAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
@@ -58,7 +61,9 @@ public class DoubtAnsAdapter extends RecyclerView.Adapter<DoubtAnsAdapter.ViewHo
         }else{
             holder.queImg.setVisibility(View.GONE);
         }
-        Picasso.get().load(modelList.get(position).getProfileImgUrl()).into(holder.profImg);
+        Picasso.get().load(modelList.get(position).getProfileImgUrl()).placeholder(Objects.requireNonNull(context.getDrawable(R.drawable.profile_icon)))
+                .error(Objects.requireNonNull(context.getDrawable(R.drawable.profile_icon)))
+                .into(holder.profImg);
 
         holder.queImg.setOnClickListener(new View.OnClickListener() {
             @Override

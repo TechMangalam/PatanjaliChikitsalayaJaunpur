@@ -167,13 +167,22 @@
 
             <Button
                 android:id="@+id/submitBtn"
-                android:text="Submit"
+                android:text="Submit for approval"
                 android:enabled="false"
                 android:textColor="@android:color/black"
                 android:layout_margin="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/videoCheckBtn"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_below="@id/submitBtn"
+                android:textColor="@color/teal_200"
+                android:text="@string/do_not_submit_for_approval_if_image_and_video_is_not_visible_after_check"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </RelativeLayout>

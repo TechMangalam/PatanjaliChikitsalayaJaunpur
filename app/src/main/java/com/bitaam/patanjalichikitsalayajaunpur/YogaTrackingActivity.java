@@ -36,6 +36,7 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -77,6 +78,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
     ArrayList<String> yogaList;
     YogaSessionModel yogaSessionModel;
     TextToSpeech textToSpeech;
+    FloatingActionButton stopVoiceBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility")
@@ -111,6 +113,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
         progTo5 = findViewById(R.id.prog_to_5);
         progTo6 = findViewById(R.id.prog_to_6);
 
+        stopVoiceBtn = findViewById(R.id.stopVoiceInstructions);
         yogaCount1Tv = findViewById(R.id.yogaCount1Tv);
         yogaCount2Tv = findViewById(R.id.yogaCount2Tv);
         yogaCount3Tv = findViewById(R.id.yogaCount3Tv);
@@ -211,12 +214,23 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
 
     private void onClickActivities() {
 
+        stopVoiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (textToSpeech.isSpeaking()){
+                    textToSpeech.stop();
+                    stopVoiceBtn.setVisibility(View.GONE);
+                }
+            }
+        });
+
         final int[] pos = {0};
 
         nextYogaBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+                startYogaBtn.setEnabled(true);
                 pos[0]++;
                 currentPos = pos[0];
                 showData(pos[0]);
@@ -268,8 +282,8 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                             textToSpeech.speak("योग सत्र समाप्त हो गया है, बाहर निकलने के लिए हाँ बटन पर क्लिक करें।",TextToSpeech.QUEUE_FLUSH, null);
                             //Yoga session is finished ,Click yes button to exit.
                         }else{
-                            textToSpeech.speak("इस योग के लिए दिया गया समय समाप्त हो गया है। नेक्स्ट बटन सक्रिय है आप क्लिक कर सकते हैं और अगले योग पर जा सकते हैं।\n" +
-                                    "नेक्स्ट बटन पर क्लिक करने के बाद आपको एक विज्ञापन दिखाई देगा जिसके बाद अगला योग अपने आप दिखाई देगा।",TextToSpeech.QUEUE_FLUSH, null);
+                            stopVoiceBtn.setVisibility(View.VISIBLE);
+                            textToSpeech.speak("इस योग के लिए दिया गया समय समाप्त हो गया है। नेक्स्ट बटन सक्रिय है आप क्लिक कर सकते हैं और अगले योग पर जा सकते हैं।",TextToSpeech.QUEUE_FLUSH, null);
                             //Time given for this yoga has finished. Next button is activated you can click and go to next yoga.
                             //After clicking next button you will shown a advertisement after which next yoga is shown automatically.
                             yogaTimerTv.setText("Done!");
@@ -296,6 +310,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                         }
                     }
                 }.start();
+                startYogaBtn.setEnabled(false);
             }
         });
 
@@ -386,8 +401,11 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
             //loadVid(holder,checkForLink(yogaModal.getVid()));
             mYouTubePlayer.cueVideo(checkForLink(yogaModal.getVid()));
             if (position == 0) {
+                stopVoiceBtn.setVisibility(View.VISIBLE);
                 textToSpeech.speak("योग सत्र शुरू करने के लिए नीचे दिए गए स्टार्ट बटन पर क्लिक करें। पहला योग समाप्त करने के बाद नेक्स्ट बटन सक्रिय होगा। आप दिए गए सत्र में प्रत्येक योग के लिए तय किए गए किसी भी योग को नहीं छोड़ सकते।\n" +
                         "आप दिए गए यूट्यूब वीडियो को देख सकते हैं या योग के बारे में दी गई जानकारी को पढ़ सकते हैं।", TextToSpeech.QUEUE_FLUSH, null);
+            }else {
+                stopVoiceBtn.setVisibility(View.GONE);
             }
             //Click  on  start  button given below  to  begin  yoogaa  session. After finishing first yoga next button active hoga . you can not skip the any yoga decided for each yoga in the given session.
             //You can watch given youtube video or read the information give about the yoga.
@@ -455,7 +473,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
     }
 
     private void initialiseRewardedAd(){
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+        RewardedAd.load(this, "ca-app-pub-8103108161786269/4669619278",
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -508,44 +526,9 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
 
                 }
             });
-        } else {
-            //Log.d(TAG, "The rewarded ad wasn't ready yet.");
         }
 
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle bundle) {
-//        super.onSaveInstanceState(bundle);
-//        currentTime = mYouTubePlayer.getCurrentTimeMillis();
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        mYouTubePlayer.loadVideo(checkForLink(yogaModals.get(currentPos).getVid()),currentTime);
-//
-//    }
-//
-//    @Override
-//    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            yogaControlRlt.setVisibility(View.GONE);
-//            yogaCountRlt.setVisibility(View.GONE);
-//            yogaContentRlt.setVisibility(View.GONE);
-//
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        }else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//
-//            yogaControlRlt.setVisibility(View.VISIBLE);
-//            yogaCountRlt.setVisibility(View.VISIBLE);
-//            yogaContentRlt.setVisibility(View.VISIBLE);
-//
-//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        }
-//
-//    }
+
 }

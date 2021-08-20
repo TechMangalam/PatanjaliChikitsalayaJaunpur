@@ -293,7 +293,7 @@ public class AddNuskeActivity extends AppCompatActivity {
         nuskeModal.setImpH(benefitH);
         nuskeModal.setHowE(howE);
         nuskeModal.setHowH(howH);
-
+        nuskeModal.setVisibility(false);
         nuskeModal.setIconUrl(imgLink);
         nuskeModal.setVid(videoLink);
         nuskeModal.setCategory("all");

@@ -1,9 +1,11 @@
 package com.bitaam.patanjalichikitsalayajaunpur.ui.Nuske;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class NuskeFragment extends Fragment {
@@ -39,6 +42,7 @@ public class NuskeFragment extends Fragment {
     FloatingActionButton addNuskeActionBtn;
     String role="User";
     UserModal userModal;
+    View parentView;
 
 
     public NuskeFragment() {
@@ -46,6 +50,7 @@ public class NuskeFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,9 +67,23 @@ public class NuskeFragment extends Fragment {
 
         addNuskeActionBtn = view.findViewById(R.id.addNuskeActionBtn);
 
-        if(role.equals("Developer")){
-            addNuskeActionBtn.setVisibility(View.VISIBLE);
-        }
+//        if(role.equals("Developer")){
+//            addNuskeActionBtn.setVisibility(View.VISIBLE);
+//        }
+
+        parentView = requireActivity().findViewById(R.id.nav_view);
+
+        ghareluNuskeRecycler.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if ((oldScrollY-scrollY)>=0){
+                    parentView.setVisibility(View.VISIBLE);
+                }else {
+                    parentView.setVisibility(View.GONE);
+                }
+            }
+        });
 
         databaseActivities();
         onClickActivities();
@@ -85,8 +104,9 @@ public class NuskeFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 NuskeModal nuskeModal = dataSnapshot.getValue(NuskeModal.class);
-
-                ((NuskeAdapter) ghareluNuskeRecycler.getAdapter()).update(nuskeModal,role);
+                assert nuskeModal != null;
+                if (nuskeModal.isVisibility())
+                ((NuskeAdapter) Objects.requireNonNull(ghareluNuskeRecycler.getAdapter())).update(nuskeModal,role);
 
 
             }

@@ -72,7 +72,7 @@
             android:visibility="gone"
             android:id="@+id/itemBanAds"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+            ads:adUnitId="ca-app-pub-8103108161786269/8466833136"/>
 
         <!-- test id-  ca-app-pub-3940256099942544/6300978111
         ad id - ca-app-pub-8103108161786269/8466833136 -->

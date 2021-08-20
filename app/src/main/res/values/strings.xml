@@ -42,5 +42,6 @@
     <string name="view_your_checkup_records_information_about_patient_and_medicine_report">View your checkup records, information about patient and medicine report.</string>
     <string name="hide_and_see_all_comments">Hide and see all Comments</string>
     <string name="askquestion">AskQuestion</string>
+    <string name="do_not_submit_for_approval_if_image_and_video_is_not_visible_after_check">Do not submit for approval if image and video is not visible after check.</string>
 
 </resources>

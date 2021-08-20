@@ -44,10 +44,11 @@ public class SignInActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Button generateOtpBtn,submitOtpBtn;
     TextInputEditText nameEdt,phoneEdt,otpEdt;
-    TextInputLayout otpInputLayout;
+    TextInputLayout otpInputLayout,nameInputLayout;
     ProgressDialog progressDialog;
     private String verificationId;
     private String otp;
+    TextView signInTv;
 
 
     @Override
@@ -61,7 +62,8 @@ public class SignInActivity extends AppCompatActivity {
         generateOtpBtn = findViewById(R.id.generateOtpBtn);
         submitOtpBtn = findViewById(R.id.submitOtpBtn);
         otpInputLayout = findViewById(R.id.otpInput);
-
+        nameInputLayout = findViewById(R.id.nameInput);
+        signInTv = findViewById(R.id.signInTv);
         nameEdt = findViewById(R.id.name_input);
         phoneEdt = findViewById(R.id.phone_input);
         otpEdt = findViewById(R.id.otp_input);
@@ -109,8 +111,8 @@ public class SignInActivity extends AppCompatActivity {
                 } else {
                     // if the text field is not empty we are calling our
                     // send OTP method for getting OTP from Firebase.
-                    progressBar.setVisibility(View.VISIBLE);
                     String phone = "+91" + phoneEdt.getText();
+                    progressDialogShow("Sending OTP","Please wait...");
                     sendVerificationCode(phone);
                     //otpInputLayout.setEnabled(true);
                 }
@@ -160,7 +162,7 @@ public class SignInActivity extends AppCompatActivity {
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-
+                                progressDialog.dismiss();
                             }
 
                             @Override
@@ -170,7 +172,7 @@ public class SignInActivity extends AppCompatActivity {
                                 otpInputLayout.setEnabled(true);
                                 submitOtpBtn.setEnabled(true);
                                 verificationId = s;
-                                progressBar.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                             }
                         })           // OnVerificationStateChangedCallbacks
                         .build();

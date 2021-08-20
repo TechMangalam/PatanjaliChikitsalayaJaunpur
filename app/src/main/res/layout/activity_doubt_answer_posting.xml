@@ -129,7 +129,7 @@
         android:visibility="gone"
         android:id="@+id/ask_doctor_ans_ads"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+        ads:adUnitId="ca-app-pub-8103108161786269/5727550077"/>
 
 
         <TextView

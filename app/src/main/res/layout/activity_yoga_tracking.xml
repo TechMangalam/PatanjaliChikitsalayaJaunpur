@@ -233,7 +233,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan1"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
                 <!-- test id - ca-app-pub-3940256099942544/6300978111
                 ad id - ca-app-pub-8103108161786269/4083653422-->
@@ -256,7 +256,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan12"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
                 <TextView
                     android:id="@+id/howToDoTitle"
@@ -287,7 +287,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan2"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
                 <TextView
                     android:id="@+id/methodH"
@@ -307,7 +307,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan13"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
                 <TextView
                     android:id="@+id/notToDoTitle"
@@ -338,7 +338,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan3"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
                 <TextView
                     android:id="@+id/notToDoH"
@@ -359,7 +359,7 @@
                     android:visibility="gone"
                     android:id="@+id/yogaConBan14"
                     ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                    ads:adUnitId="ca-app-pub-8103108161786269/4664915691"/>
 
             </RelativeLayout>
 
@@ -418,6 +418,16 @@
 
     </RelativeLayout>
 
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/stopVoiceInstructions"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:elevation="30dp"
+        android:src="@drawable/ic_baseline_record_voice_over_24"
+        android:layout_width="wrap_content"
+        android:visibility="visible"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
