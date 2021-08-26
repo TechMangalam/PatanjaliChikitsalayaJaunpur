@@ -40,6 +40,7 @@ public class PatientListActivity extends AppCompatActivity {
     RecyclerView patientListRecycler;
     String userRole="User",mobileNo;
     UserModal userModal;
+    PatientListAdapter patientListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +77,12 @@ public class PatientListActivity extends AppCompatActivity {
 
     private void databaseActivities(String mobNo) {
 
-        PatientListAdapter patientListAdapter = new PatientListAdapter(patientListRecycler,new ArrayList<PatientModel>(),new ArrayList<String>(),userModal.getRole(),getApplicationContext());
+        patientListAdapter = new PatientListAdapter(patientListRecycler,new ArrayList<PatientModel>(),new ArrayList<String>(),userModal.getRole(),getApplicationContext());
         patientListRecycler.setAdapter(patientListAdapter);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
 
-        databaseReference.orderByChild("phoneNo").addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("dateTime").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if (!userModal.getRole().equals("User") || Objects.equals(snapshot.child("phoneNo").getValue(), mobNo)) {
@@ -127,11 +128,13 @@ public class PatientListActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                patientListAdapter.getFilter().filter(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                patientListAdapter.getFilter().filter(s);
                 return false;
             }
         });

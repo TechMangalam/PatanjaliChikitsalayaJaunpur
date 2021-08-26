@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class NuskeModal implements Serializable {
 
-    String nuskeName,vid,iconUrl,howE,howH,impE,impH,category,type;
+    String name,nuskeName,vid,iconUrl,howE,howH,impE,impH,category,type;
     boolean visibility;
 
     public NuskeModal() {
@@ -20,6 +20,14 @@ public class NuskeModal implements Serializable {
         this.impH = impH;
         this.category = category;
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isVisibility() {

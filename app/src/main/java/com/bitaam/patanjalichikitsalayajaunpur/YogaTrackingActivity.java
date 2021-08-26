@@ -68,7 +68,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
     BgMediaWebView yogaWebView;
     ProgressBar progressBar;
     ProgressDialog progressDialog;
-    TextView benifitsE,benifitsH,howE,howH,notE,notH,yogaSessionTitle,yogaName;
+    TextView errorTv,benifitsE,benifitsH,howE,howH,notE,notH,yogaSessionTitle,yogaName;
     AdView ban1,ban2,ban3,ban12,ban13,ban14;
     YouTubePlayerView youTubePlayerView;
     YouTubePlayer mYouTubePlayer;
@@ -123,6 +123,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
         yogaTimerTv = findViewById(R.id.timerTxtView);
         yogaSessionTitle = findViewById(R.id.yogaSessionTitle);
         yogaName = findViewById(R.id.yoga_name);
+        errorTv = findViewById(R.id.youtubePlayerErrorTv);
 
         startYogaBtn = findViewById(R.id.startYogaBtn);
         startYogaBtn.setEnabled(true);
@@ -158,6 +159,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
                 Toast.makeText(YogaTrackingActivity.this, "Initialisation failed", Toast.LENGTH_SHORT).show();
+                Log.e("youtube",youTubeInitializationResult.toString());
             }
         });
 
@@ -337,7 +339,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     YogaModal yogaModal = snapshot.getValue(YogaModal.class);
                     yogaModals.add(yogaModal);
-                    Log.e("yoga",snapshot.getValue().toString());
+                    //Log.e("yoga",snapshot.getValue().toString());
                 }
 
                 @Override
@@ -399,7 +401,10 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
             notE.setText(yogaModal.getNotE());
             notH.setText(yogaModal.getNotH());
             //loadVid(holder,checkForLink(yogaModal.getVid()));
-            mYouTubePlayer.cueVideo(checkForLink(yogaModal.getVid()));
+            if (mYouTubePlayer!=null)
+                mYouTubePlayer.cueVideo(checkForLink(yogaModal.getVid()));
+            else
+                errorTv.setVisibility(View.VISIBLE);
             if (position == 0) {
                 stopVoiceBtn.setVisibility(View.VISIBLE);
                 textToSpeech.speak("योग सत्र शुरू करने के लिए नीचे दिए गए स्टार्ट बटन पर क्लिक करें। पहला योग समाप्त करने के बाद नेक्स्ट बटन सक्रिय होगा। आप दिए गए सत्र में प्रत्येक योग के लिए तय किए गए किसी भी योग को नहीं छोड़ सकते।\n" +

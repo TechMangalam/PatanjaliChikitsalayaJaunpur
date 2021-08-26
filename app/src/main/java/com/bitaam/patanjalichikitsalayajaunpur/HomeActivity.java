@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("My Upchar");
+        toolbar.setTitle("My Upchaar");
 
         navView = findViewById(R.id.nav_view);
         active  = new HomeFragment();
@@ -92,12 +92,12 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_home:
                         fragment = new HomeFragment();
                         homeFlag = true;
-                        toolbar.setTitle("My Upchar");
+                        toolbar.setTitle("My Upchaar");
                         break;
                     case R.id.navigation_upchar:
                         fragment = new UpcharFragment();
                         homeFlag = false;
-                        toolbar.setTitle("Upchar");
+                        toolbar.setTitle("Upchaar");
                         //if (interstitialAd.isLoaded())
                             //interstitialAd.show();
                         break;
@@ -183,17 +183,37 @@ public class HomeActivity extends AppCompatActivity {
         }else if(id == R.id.profile){
             startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
         }else if(id == R.id.share){
+            shareApp();
+        }else if(id == R.id.feedback){
+            startActivity(new Intent(getApplicationContext(),FeedbackActivity.class));
 
-            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-
-            intent.setType("text/plain");
-            intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share app");
-            intent.putExtra(android.content.Intent.EXTRA_TEXT, "https://drive.google.com/file/d/1utb25LaWEhP-vt0H2Gxrgh6nCEescJL3/view?usp=sharing \nOR\n  https://bitaam.online/EngTextScanner.html");
-
-            startActivity(Intent.createChooser(intent, "Select app to share"));
         }
 
         return true;
+    }
+
+    private void shareApp(){
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share MyUpchaar");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("share");
+        reference.keepSynced(true);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, snapshot.getValue(String.class));
+
+                startActivity(Intent.createChooser(intent, "Select app to share"));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void AlertExit(){

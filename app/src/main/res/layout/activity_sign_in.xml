@@ -136,17 +136,28 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/resendOTPTimerTv"
+            android:text="Resend OTP in 02:00 minutes"
+            android:textColor="@color/white"
+            android:layout_below="@id/otpInput"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/otpInput"
+            android:layout_below="@id/resendOTPTimerTv"
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/generateOtpBtn"
-                android:text="generate otp"
+                android:text="Generate OTP"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"

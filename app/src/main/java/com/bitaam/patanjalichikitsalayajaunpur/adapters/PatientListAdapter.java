@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +21,14 @@ import com.bitaam.patanjalichikitsalayajaunpur.modals.UpcharModal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PatientListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PatientListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     RecyclerView recyclerView;
     ArrayList<PatientModel> patientModels;
+    ArrayList<PatientModel> filterdItemModels= new ArrayList<>();
+    ArrayList<String> patientNo = new ArrayList<>();
     ArrayList<String> keys;
     String userRole="";
     Context context;
@@ -48,20 +53,58 @@ public class PatientListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         ViewHolder viewHolder = (ViewHolder)holder;
-        viewHolder.patNameTv.setText("Patient Name : "+patientModels.get(position).getName());
-        viewHolder.checkupDateTv.setText("Checkup Date : "+patientModels.get(position).getDateTime());
-        viewHolder.diseaseTv.setText("Disease : "+patientModels.get(position).getDisease());
-        viewHolder.hospitalTv.setText("Hospital : "+patientModels.get(position).getHospital());
+        viewHolder.patNameTv.setText("Patient Name : "+filterdItemModels.get(position).getName());
+        viewHolder.checkupDateTv.setText("Checkup Date : "+filterdItemModels.get(position).getDateTime());
+        viewHolder.diseaseTv.setText("Disease : "+filterdItemModels.get(position).getDisease());
+        viewHolder.hospitalTv.setText("Hospital : "+filterdItemModels.get(position).getHospital());
 
     }
 
     @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String query = charSequence.toString();
+
+                List<PatientModel> filtered = new ArrayList<>();
+
+                if (query.isEmpty()) {
+                    filtered.addAll(patientModels);
+
+                } else {
+                    for (String nos : patientNo) {
+                        if (nos.toLowerCase().contains(query.toLowerCase())) {
+                            filtered.add(patientModels.get(patientNo.indexOf(nos)));
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.count = filtered.size();
+                results.values = filtered;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                filterdItemModels = (ArrayList<PatientModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+
+
+
+    @Override
     public int getItemCount() {
-        return patientModels.size();
+        return filterdItemModels.size();
     }
 
     public void update(PatientModel patientModel,String key){
-
+        filterdItemModels.add(patientModel);
+        patientNo.add(patientModel.getPhoneNo()+" "+patientModel.getName());
         patientModels.add(patientModel);
         keys.add(key);
         notifyDataSetChanged();

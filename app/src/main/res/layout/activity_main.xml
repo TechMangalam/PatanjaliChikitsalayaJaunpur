@@ -21,14 +21,16 @@
 
 <!--    <TextView-->
 <!--        android:id="@+id/titleTv"-->
-<!--        android:text="@string/app_name"-->
-<!--        android:textSize="40dp"-->
-<!--        android:textStyle="normal"-->
-<!--        android:typeface="sans"-->
-<!--        android:visibility="gone"-->
-<!--        android:layout_centerInParent="true"-->
+<!--        android:text="Patanjali Chikitsalaya Jaunpur"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:typeface="serif"-->
+<!--        android:visibility="visible"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="150dp"-->
+<!--        android:textAlignment="center"-->
 <!--        android:textColor="@android:color/white"-->
-<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"/>-->
 
 

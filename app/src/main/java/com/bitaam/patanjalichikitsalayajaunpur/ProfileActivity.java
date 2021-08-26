@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -51,11 +53,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     EditText profileName,email;
     Button update;
-    SimpleDraweeView profileImage,photoSelector;
+    SimpleDraweeView photoSelector;
+    CircleImageView profileImage;
     StorageReference storageReference;
     DatabaseReference databaseReference;
+    TextView rotateImageTv;
     ProgressBar progressBar;
     Uri profileImageUri;
+    byte[] filesInBytes;
+    Bitmap qImg;
+    String imgLink="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         update = findViewById(R.id.update);
         photoSelector = findViewById(R.id.photo_selector_icon);
+        rotateImageTv = findViewById(R.id.rotateImageTv);
 
         profileImage = findViewById(R.id.profile_image);
 
@@ -102,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        profileImage.setImageURI(uri);
+                        Picasso.get().load(uri).into(profileImage);
                         progressBar.setVisibility(View.GONE);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -137,31 +145,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        rotateImageTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qImg = rotateImage(qImg,90);
+            }
+        });
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if(profileName.getText().toString().trim()!=FirebaseAuth.getInstance().getCurrentUser().getDisplayName()){
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(profileName.getText().toString()).setPhotoUri(profileImageUri).build();
-
-                    user.updateProfile(profileUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(),"Updated",Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-
-                        }
-                    });
-                }
+                uploadImageToFirebase(filesInBytes);
 
             }
         });
@@ -173,21 +168,43 @@ public class ProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
             if(resultCode == Activity.RESULT_OK){
-                progressBar.setVisibility(View.VISIBLE);
                 Uri imgUri = data.getData();
+                profileImageUri = imgUri;
                 Bitmap bmp = null;
                 try{
                     bmp = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+                    qImg = bmp;
                 }catch (Exception e){}
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
-                byte[] fileInBytes = baos.toByteArray();
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+//                byte[] fileInBytes = baos.toByteArray();
 
-                profileImage.setImageURI(imgUri);
+                filesInBytes = compressImg(qImg);
+                rotateImageTv.setVisibility(View.VISIBLE);
+                profileImage.setImageURI(profileImageUri);
+                update.setEnabled(true);
 
-                uploadImageToFirebase(fileInBytes);
+                //uploadImageToFirebase(fileInBytes);
             }
         }
+    }
+
+    private Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        filesInBytes = null;
+        filesInBytes = compressImg(rotatedImg);
+        profileImage.setImageBitmap(rotatedImg);
+        return rotatedImg;
+    }
+
+    private byte[] compressImg(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
+        byte[] fileInBytes = baos.toByteArray();
+        //filesInByte = baos.toByteArray();
+        return fileInBytes;
     }
 
     private void uploadImageToFirebase(byte[] fileInBytes) {
@@ -200,10 +217,10 @@ public class ProfileActivity extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        profileImage.setImageURI(uri);
                         profileImageUri = uri;
-                        update.setEnabled(true);
-                        progressBar.setVisibility(View.GONE);
+                        imgLink = uri.toString();
+                        rotateImageTv.setVisibility(View.GONE);
+                        getDataAndUpload();
                     }
                 });
             }
@@ -214,6 +231,33 @@ public class ProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void getDataAndUpload(){
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(profileName.getText().toString()).setPhotoUri(profileImageUri).build();
+
+        assert user != null;
+        user.updateProfile(profileUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),"Updated",Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+
+
     }
 
 

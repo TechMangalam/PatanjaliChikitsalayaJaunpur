@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,6 +45,7 @@ public class AddNuskeActivity extends AppCompatActivity {
 
     Button attachImageBtn,checkVideoBtn,submitBtn;
     EditText dNameEdt,videoLinkEdt,dHowEnEdt,dHowHiEdt,dBenEnEdt,dBenHiEdt;
+    TextView writerNameTv;
     BgMediaWebView checkVideoWebView;
     ImageView imageView;
     String imgLink="";
@@ -51,6 +54,7 @@ public class AddNuskeActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     String role="na";
     boolean completed = false;
+    FirebaseUser user;
 
 
     @Override
@@ -58,8 +62,10 @@ public class AddNuskeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_nuske);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         Intent intent = getIntent();
-        NuskeModal nuskeModal = (NuskeModal) intent.getSerializableExtra("yogaInfo");
+        NuskeModal nuskeModal = (NuskeModal) intent.getSerializableExtra("nuskeInfo");
         if (intent.getStringExtra("role") != null){
             role = intent.getStringExtra("role");
         }
@@ -70,6 +76,7 @@ public class AddNuskeActivity extends AppCompatActivity {
         checkVideoBtn = findViewById(R.id.videoCheckBtn);
         submitBtn = findViewById(R.id.submitBtn);
 
+        writerNameTv = findViewById(R.id.writerName);
         dNameEdt = findViewById(R.id.dName);
         dHowEnEdt = findViewById(R.id.dHowE);
         dHowHiEdt = findViewById(R.id.dHowH);
@@ -88,10 +95,16 @@ public class AddNuskeActivity extends AppCompatActivity {
             setDataToEdit(nuskeModal);
         }
 
+
+        assert user != null;
+        String writer = "Written by : "+user.getDisplayName();
+        writerNameTv.setText(writer);
+
     }
 
     private void setDataToEdit(NuskeModal nuskeModal) {
-
+        String writer = "Written by : "+nuskeModal.getName();
+        writerNameTv.setText(writer);
         dNameEdt.setText(nuskeModal.getNuskeName());
         dHowEnEdt.setText(nuskeModal.getHowE());
         dHowHiEdt.setText(nuskeModal.getHowH());
@@ -237,12 +250,13 @@ public class AddNuskeActivity extends AppCompatActivity {
 
     private void getDataAndUpload() {
 
-        String name,howE,howH,benE,benH,videoLink;
+        String name,howE,howH,benE,benH,videoLink,writerName;
         name = dNameEdt.getText().toString();
         howE = dHowEnEdt.getText().toString();
         howH = dHowHiEdt.getText().toString();
         benE = dBenEnEdt.getText().toString();//getTextLocale().getLanguage();
         benH = dBenHiEdt.getText().toString();
+        writerName = user.getDisplayName();
 
         videoLink = videoLinkEdt.getText().toString();
 
@@ -280,14 +294,15 @@ public class AddNuskeActivity extends AppCompatActivity {
         }
 
         if (flag){
-            updateToDatabase(name,benE,benH,howE,howH,imgLink,videoLink);
+            updateToDatabase(name,benE,benH,howE,howH,imgLink,videoLink,writerName);
         }
 
     }
 
-    private void updateToDatabase(String name, String benefitE, String benefitH, String howE, String howH, String imgLink, String videoLink) {
+    private void updateToDatabase(String name, String benefitE, String benefitH, String howE, String howH, String imgLink, String videoLink,String writerName) {
 
         NuskeModal nuskeModal = new NuskeModal();
+        nuskeModal.setName(writerName);
         nuskeModal.setNuskeName(name);
         nuskeModal.setImpE(benefitE);
         nuskeModal.setImpH(benefitH);

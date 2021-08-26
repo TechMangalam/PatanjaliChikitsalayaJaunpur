@@ -28,6 +28,8 @@
         android:layout_below="@id/toolbarSearch"
         android:layout_above="@id/patient_list_ads"
         android:scrollbars="vertical"
+        app:reverseLayout="true"
+        app:stackFromEnd="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

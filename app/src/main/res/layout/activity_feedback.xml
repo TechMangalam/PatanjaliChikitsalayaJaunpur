@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FeedbackActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFeedback"
+        app:title="Feedback"
+        android:background="?attr/colorPrimaryVariant"
+        app:titleTextColor="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/infoTv"
+        android:textColor="@color/teal_200"
+        android:textSize="18sp"
+        android:text="Your feedback is very important to us please share your experience on My Upchaar with us. We will try to improve the features based on your feedback."
+        android:layout_below="@id/toolbarFeedback"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/upiInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="true"
+        android:hint="Enter your feedback"
+        app:boxCornerRadiusBottomEnd="14dp"
+        android:padding="5dp"
+        app:endIconMode="clear_text"
+        app:helperText="* Required"
+        android:layout_below="@+id/infoTv"
+        app:startIconDrawable="@drawable/ic_baseline_feedback_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/feedback_input"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submitFeedbackBtn"
+        android:layout_below="@id/upiInput"
+        android:text="Submit"
+        android:layout_marginTop="30dp"
+        android:enabled="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

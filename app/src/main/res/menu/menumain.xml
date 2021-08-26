@@ -13,7 +13,10 @@
         android:title="Profile"
         android:id="@+id/profile"/>
 
+    <item
 
+        android:title="Feedback"
+        android:id="@+id/feedback"/>
 
     <item
 

@@ -49,7 +49,7 @@ public class NuskeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         Fresco.initialize(context);
         MobileAds.initialize(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.yoga_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.nuske_item,parent,false);
         return new ViewHolder(view);
 
     }
@@ -59,6 +59,8 @@ public class NuskeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         ViewHolder viewHolder = (ViewHolder)holder;
         viewHolder.nameofFile.setText(nuskeModals.get(position).getNuskeName());
+        String writer = "Written by : "+nuskeModals.get(position).getName();
+        viewHolder.writerNameTv.setText(writer);
 
         if (position%2==0){
             viewHolder.yogalistAds.setVisibility(View.VISIBLE);
@@ -74,7 +76,7 @@ public class NuskeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Intent intent = new Intent(context, AddNuskeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("role","edit");
-                intent.putExtra("nuskeInfo", (Serializable) nuskeModals.get(position));
+                intent.putExtra("nuskeInfo",nuskeModals.get(position));
                 context.startActivity(intent);
             }
         });
@@ -102,7 +104,7 @@ public class NuskeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nameofFile;
+        TextView nameofFile,writerNameTv;
         SimpleDraweeView webIcon;
         AdView yogalistAds;
         ImageView yogaEditImgView;
@@ -110,6 +112,7 @@ public class NuskeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            writerNameTv = itemView.findViewById(R.id.webUrl);
             nameofFile = itemView.findViewById(R.id.webName);
             yogalistAds = itemView.findViewById(R.id.itemBanAds);
             webIcon = itemView.findViewById(R.id.webIconImg);

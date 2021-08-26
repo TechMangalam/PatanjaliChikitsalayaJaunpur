@@ -150,6 +150,17 @@
             android:layout_alignParentTop="true"
             android:layout_height="220dp"/>
 
+        <TextView
+            android:id="@+id/youtubePlayerErrorTv"
+            android:text="Unable to load video"
+            android:layout_marginTop="75dp"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <ProgressBar
             android:id="@+id/yogaLoadingProgrssbar"
             android:layout_marginTop="90dp"

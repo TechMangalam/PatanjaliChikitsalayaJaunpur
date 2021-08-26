@@ -41,7 +41,9 @@ import com.bitaam.patanjalichikitsalayajaunpur.YogaSessionsListActivity;
 import com.bitaam.patanjalichikitsalayajaunpur.YogaTrackingActivity;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.DailyYogaAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.GeneralUpcharAdapter;
+import com.bitaam.patanjalichikitsalayajaunpur.adapters.PopularNuskeAdapter;
 import com.bitaam.patanjalichikitsalayajaunpur.adapters.YogaAdapter;
+import com.bitaam.patanjalichikitsalayajaunpur.modals.NuskeModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.UpcharModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.UserModal;
 import com.bitaam.patanjalichikitsalayajaunpur.modals.YogaModal;
@@ -67,7 +69,7 @@ import java.util.Objects;
 public class HomeFragment extends Fragment {
 
     UserModal userModal;
-    RecyclerView dailyYogRecycler,generalUpcharRecycler;
+    RecyclerView dailyYogRecycler,generalUpcharRecycler,popularNuskeRecycler;
     CardView itemSearchCard,yogaSessionCard;
     FloatingActionButton addPatientActionBtn;
     CarouselView carouselView;
@@ -89,6 +91,7 @@ public class HomeFragment extends Fragment {
         dailyYogRecycler = root.findViewById(R.id.dailyYogRecycler);
         itemSearchCard = root.findViewById(R.id.patientManagementCard);
         generalUpcharRecycler = root.findViewById(R.id.generalUpcharRecycler);
+        popularNuskeRecycler = root.findViewById(R.id.popularNuskeRecycler);
         addPatientActionBtn = root.findViewById(R.id.addPatientActionBtn);
         yogaSessionCard = root.findViewById(R.id.yogaSessionCard);
         infoImgUrls = new ArrayList<>();
@@ -124,6 +127,9 @@ public class HomeFragment extends Fragment {
         dailyYogRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         generalUpcharRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        popularNuskeRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
 
         getUserInfo();
 
@@ -286,6 +292,54 @@ public class HomeFragment extends Fragment {
         });
 
         databaseReference1.onDisconnect();
+
+        PopularNuskeAdapter popularNuskeAdapter = new PopularNuskeAdapter(popularNuskeRecycler,getContext(),new ArrayList<String>(),new ArrayList<String>(),new ArrayList<NuskeModal>());
+        popularNuskeRecycler.setAdapter(popularNuskeAdapter);
+
+        DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Nuske");
+        databaseReference2.keepSynced(true);
+
+        databaseReference2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+
+                NuskeModal nuskeModal = dataSnapshot.getValue(NuskeModal.class);
+
+                assert nuskeModal != null;
+                if (nuskeModal.getCategory().equals("trending") && nuskeModal.isVisibility()){
+                    String fileName = dataSnapshot.getKey();
+                    String iconUrl = "na";
+                    if (dataSnapshot.hasChild("iconUrl")){
+                        iconUrl = String.valueOf(dataSnapshot.child("iconUrl").getValue());
+                    }
+                    ((PopularNuskeAdapter) Objects.requireNonNull(popularNuskeRecycler.getAdapter())).update(fileName,iconUrl,nuskeModal);
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReference2.onDisconnect();
 
     }
 

@@ -64,6 +64,7 @@ public class NuskeDisplayActivity extends AppCompatActivity {
         AdView ban11 = findViewById(R.id.yogaConBan11);
         AdView ban12 = findViewById(R.id.yogaConBan12);
         AdView ban13 = findViewById(R.id.yogaConBan13);
+        TextView writerNameTv = findViewById(R.id.writerNameTv);
 
 
         adRequest = new AdRequest.Builder().build();
@@ -76,6 +77,8 @@ public class NuskeDisplayActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         if (nuskeModal != null){
+            String writer = "Written by : "+nuskeModal.getName();
+            writerNameTv.setText(writer);
             toolbar.setTitle(nuskeModal.getNuskeName());
             benifitsE.setText(nuskeModal.getImpE());
             benifitsH.setText(nuskeModal.getImpH());

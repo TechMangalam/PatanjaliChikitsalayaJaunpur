@@ -27,10 +27,20 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/writerName"
+                android:text="Written by : Unknown"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
                 android:id="@+id/nameHead"
                 android:text="Nuska Title"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:layout_below="@id/writerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

@@ -180,7 +180,7 @@
 
                     <TextView
                         android:id="@+id/generalUpcharTitle"
-                        android:text="Comman Disease"
+                        android:text="Common Disease"
                         android:drawableStart="@drawable/ic_sharp_blur_circular_24"
                         android:layout_marginTop="5dp"
                         android:drawablePadding="10dp"
@@ -194,6 +194,46 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/generalUpcharRecycler"
                         android:layout_below="@id/generalUpcharTitle"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/popularNuskeCard"
+                android:padding="5dp"
+                android:layout_marginBottom="55dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                android:layout_below="@id/generalUpchaCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/popularNuskeTitle"
+                        android:text="Popular Nuske"
+                        android:drawableStart="@drawable/ic_sharp_blur_circular_24"
+                        android:layout_marginTop="5dp"
+                        android:drawablePadding="10dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:paddingStart="5dp"
+                        android:typeface="sans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularNuskeRecycler"
+                        android:layout_below="@id/popularNuskeTitle"
                         android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

@@ -105,9 +105,9 @@ public class NuskeFragment extends Fragment {
 
                 NuskeModal nuskeModal = dataSnapshot.getValue(NuskeModal.class);
                 assert nuskeModal != null;
-                if (nuskeModal.isVisibility())
-                ((NuskeAdapter) Objects.requireNonNull(ghareluNuskeRecycler.getAdapter())).update(nuskeModal,role);
-
+                if (nuskeModal.isVisibility() || role.equals("Developer")) {
+                    ((NuskeAdapter) Objects.requireNonNull(ghareluNuskeRecycler.getAdapter())).update(nuskeModal, role);
+                }
 
             }
 

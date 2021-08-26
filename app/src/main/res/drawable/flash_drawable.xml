@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
-            android:src="@drawable/upchaar_flash"/>
+            android:src="@drawable/upchaar_flash_1"/>
     </item>
 
 </layer-list>

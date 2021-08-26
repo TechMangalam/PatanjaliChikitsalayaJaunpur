@@ -42,11 +42,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/writerNameTv"
+                android:text="Written by : Unknown"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+                android:layout_below="@id/writerNameTv"
                 android:id="@+id/yogaConBan11"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-8103108161786269/5786425673"/>
