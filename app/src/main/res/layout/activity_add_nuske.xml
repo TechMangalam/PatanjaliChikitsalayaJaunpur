@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarAddUpchar"
-        app:title="Add Nuske"
+        app:title="Add Nuske(नुस्के लिखें)"
         android:background="?attr/colorPrimaryVariant"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -27,10 +27,21 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/nuskeInfo"
+                android:textColor="@color/teal_200"
+                android:text="आप यहां अपना नुस्के लिख सकते हैं, जिससे लोगों को किसी न किसी बीमारी को ठीक करने में मदद मिलेगी।
+नुस्के सबमिट करने के बाद, हम इसकी समीक्षा करेंगे यदि यह सही है तो हम इसे अन्य उपयोगकर्ताओं के उपयोग के लिए खोल देते हैं।
+खाली क्षेत्रों में NA लिखें।"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
                 android:id="@+id/writerName"
                 android:text="Written by : Unknown"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:layout_below="@id/nuskeInfo"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -187,9 +198,19 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/checkInfoEn"
                 android:layout_below="@id/submitBtn"
                 android:textColor="@color/teal_200"
                 android:text="@string/do_not_submit_for_approval_if_image_and_video_is_not_visible_after_check"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_below="@id/checkInfoEn"
+                android:textColor="@color/teal_200"
+                android:text="यदि जांच के बाद छवि और वीडियो दिखाई न दे तो अनुमोदन के लिए सबमिट न करें।"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"

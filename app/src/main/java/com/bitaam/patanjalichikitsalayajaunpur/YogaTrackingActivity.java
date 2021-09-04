@@ -196,6 +196,12 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
         },5000);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        textToSpeech.stop();
+    }
+
     private void showBannerAds() {
 
         ban1.setVisibility(View.VISIBLE);
@@ -281,7 +287,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                             nextYogaBtn.setEnabled(false);
                             nextYogaBtn.setBackgroundTintList(getColorStateList(android.R.color.darker_gray));
                             alertExit("Yoga Session","Your session finished. Do You want to exit ?");
-                            textToSpeech.speak("योग सत्र समाप्त हो गया है, बाहर निकलने के लिए हाँ बटन पर क्लिक करें।",TextToSpeech.QUEUE_FLUSH, null);
+                            textToSpeech.speak("योग सत्र समाप्त हो गया है, बाहर निकलने के लिए exit बटन पर क्लिक करें।",TextToSpeech.QUEUE_FLUSH, null);
                             //Yoga session is finished ,Click yes button to exit.
                         }else{
                             stopVoiceBtn.setVisibility(View.VISIBLE);

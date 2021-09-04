@@ -145,7 +145,7 @@ public class AddNuskeActivity extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     //imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
 
-                    if (videoLinkEdt.getText().toString().trim().length() != 0){
+                    if (videoLinkEdt.getText().toString().trim().length() > 10){
                         videoId = "" + videoLinkEdt.getText() + "";
                         checkForLink();
                         checkVideoWebView.setVisibility(View.VISIBLE);
@@ -155,6 +155,7 @@ public class AddNuskeActivity extends AppCompatActivity {
                         //attachYouVidBtn.setVisibility(View.VISIBLE);
                     }else{
                         videoLinkEdt.setError("enter youtube video link");
+                        videoLinkEdt.setFocusable(true);
                     }
                 }else{
                     submitBtn.setEnabled(false);
@@ -264,27 +265,33 @@ public class AddNuskeActivity extends AppCompatActivity {
 
         if (name.isEmpty()){
             dNameEdt.setError("Name is empty !");
+            dNameEdt.setFocusable(true);
             flag = false;
         }
         if (benE.isEmpty()){
             dBenEnEdt.setError("Benefit is empty !");
+            dBenEnEdt.setFocusable(true);
             flag = false;
         }
         if (benH.isEmpty()){
             dBenHiEdt.setError("Benefit is empty");
+            dBenHiEdt.setFocusable(true);
             flag = false;
         }
         if (howE.isEmpty()){
             dHowEnEdt.setError("How to do is empty");
+            dHowEnEdt.setFocusable(true);
             flag = false;
         }
         if (howH.isEmpty()){
             dHowHiEdt.setError("How to do is empty");
+            dHowHiEdt.setFocusable(true);
             flag = false;
         }
 
         if (videoLink.isEmpty()){
             videoLinkEdt.setError("video link is empty");
+            videoLinkEdt.setFocusable(true);
             flag = false;
         }
 

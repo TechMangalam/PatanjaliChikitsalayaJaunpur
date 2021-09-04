@@ -16,7 +16,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_alignParentTop="true"
             android:id="@+id/logo"
-            android:src="@drawable/upchaar_logo14"
+            android:src="@mipmap/myupchaar_icon_round"
             android:layout_width="120dp"
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"

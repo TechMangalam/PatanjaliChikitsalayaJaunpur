@@ -29,13 +29,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".YogaSessionsListActivity" />
         <activity
-            android:name=".NuskeDisplayActivity"
+            android:name=".utility.YoutubeVideoDisplayActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:supportsPictureInPicture="true"
             tools:targetApi="24" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".YogaSessionsListActivity" />
+        <activity
+            android:name=".NuskeDisplayActivity" />
         <activity android:name=".AddNuskeActivity" />
         <activity
             android:name=".YogaTrackingActivity"
@@ -63,15 +65,9 @@
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UpcharDisplayActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:supportsPictureInPicture="true"
-            tools:targetApi="24" />
+            android:name=".UpcharDisplayActivity" />
         <activity
-            android:name=".YogaDisplayActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:supportsPictureInPicture="true"
-            tools:targetApi="24" />
+            android:name=".YogaDisplayActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

@@ -13,13 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.bitaam.patanjalichikitsalayajaunpur.utility.BgMediaWebView
-        android:id="@+id/yogaWebView"
+    <ImageView
+        android:id="@+id/yogaImageView"
         android:layout_below="@id/toolbarYoga"
         android:layout_marginTop="0dp"
+        android:scaleType="fitXY"
         android:background="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="220dp"/>
+        android:layout_height="200dp"/>
+
+    <Button
+        android:id="@+id/videoPlayBtn"
+        android:text="@string/play_upchaar_video"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/yogaImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <ProgressBar
         android:id="@+id/upcharLoadingProgrssbar"
@@ -30,9 +40,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <View
+        android:layout_alignTop="@id/scrollContentView"
+        android:background="@color/teal_200"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
     <ScrollView
         android:id="@+id/scrollContentView"
-        android:layout_below="@id/yogaWebView"
+        android:layout_below="@id/yogaImageView"
         android:layout_width="match_parent"
         android:scrollbars="vertical"
         android:layout_height="match_parent">
@@ -48,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
                 android:visibility="visible"
                 android:id="@+id/yogaConBan11"
                 ads:adSize="BANNER"
