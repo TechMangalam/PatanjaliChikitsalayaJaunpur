@@ -98,11 +98,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Phone No."
-        android:drawableStart="@drawable/ic_baseline_local_phone_24"
         android:drawablePadding="10dp"
         android:paddingStart="20dp"
         android:singleLine="true"
-        android:layout_below="@+id/profileName"/>
+        android:layout_below="@+id/profileName"
+        fresco:drawableStartCompat="@drawable/ic_baseline_local_phone_24"
+        tools:ignore="RtlSymmetry" />
 
     <EditText
         android:id="@+id/email"
@@ -114,6 +115,20 @@
         android:paddingStart="9dp"
         android:singleLine="true"
         android:layout_below="@+id/emailProfile"/>
+
+    <TextView
+        android:id="@+id/privacyPolicyTv"
+        android:text="Privacy policy"
+        android:gravity="center_vertical"
+        android:textColor="@color/teal_200"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/email"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTint="@color/teal_200"
+        android:drawablePadding="10dp"
+        fresco:drawableStartCompat="@drawable/ic_baseline_info_24" />
 
 
 

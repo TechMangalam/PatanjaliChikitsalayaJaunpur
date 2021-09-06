@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     CircleImageView profileImage;
     StorageReference storageReference;
     DatabaseReference databaseReference;
-    TextView rotateImageTv;
+    TextView rotateImageTv,privacyPolicyTv;
     ProgressBar progressBar;
     Uri profileImageUri;
     byte[] filesInBytes;
@@ -81,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
         update = findViewById(R.id.update);
         photoSelector = findViewById(R.id.photo_selector_icon);
         rotateImageTv = findViewById(R.id.rotateImageTv);
+        privacyPolicyTv = findViewById(R.id.privacyPolicyTv);
 
         profileImage = findViewById(R.id.profile_image);
 
@@ -135,6 +136,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void onClickActivity() {
+
+        privacyPolicyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://bitaam.com/Privacy-Policy/my-upchaar-privacy-policy.html");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
         photoSelector.setOnClickListener(new View.OnClickListener() {
             @Override
