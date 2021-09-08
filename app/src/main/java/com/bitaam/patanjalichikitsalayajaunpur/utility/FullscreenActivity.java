@@ -1,27 +1,13 @@
 package com.bitaam.patanjalichikitsalayajaunpur.utility;
 
-import android.annotation.SuppressLint;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bitaam.patanjalichikitsalayajaunpur.R;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.URL;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class FullscreenActivity extends AppCompatActivity {

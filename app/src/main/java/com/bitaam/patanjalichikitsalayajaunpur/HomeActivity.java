@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -35,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
@@ -49,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser user;
+    boolean logoutFlag = false;
+    String msg="";
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -74,6 +80,24 @@ public class HomeActivity extends AppCompatActivity {
         navView.setSelectedItemId(R.id.navigation_home);
 
         onClickActivities();
+
+        new CountDownTimer(2*60000,1000){
+            public void onTick(long millisUntilFinished) {
+
+                long minute =millisUntilFinished/60000;
+                long sec = 60 - ((3*60000-millisUntilFinished)/1000)%60;
+                String time = new DecimalFormat("00").format(minute)+":"+new DecimalFormat("00").format(sec);
+                msg = "You can logout after "+time+" minutes";
+
+            }
+
+            @Override
+            public void onFinish() {
+                logoutFlag = true;
+            }
+
+
+        }.start();
 
 
     }
@@ -176,9 +200,13 @@ public class HomeActivity extends AppCompatActivity {
 
         if(id == R.id.log_out)
         {
-            AlertExit();
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            if (logoutFlag){
+                AlertExit();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }else{
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
 
         }else if(id == R.id.profile){
             startActivity(new Intent(getApplicationContext(),ProfileActivity.class));

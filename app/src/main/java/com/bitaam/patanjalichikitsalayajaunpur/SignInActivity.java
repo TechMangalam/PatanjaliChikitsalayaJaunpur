@@ -130,6 +130,7 @@ public class SignInActivity extends AppCompatActivity {
                             progressDialogShow("Resending OTP","Please wait...");
                             resendVerificationCode(phone, mResendToken);
                             //otpInputLayout.setEnabled(true);
+                            generateOtpBtn.setVisibility(View.GONE);
                         }else{
                             Toast.makeText(SignInActivity.this, "Try again after some time.", Toast.LENGTH_LONG).show();
                         }
@@ -287,6 +288,7 @@ public class SignInActivity extends AppCompatActivity {
                         } else {
                             // if the code is not correct then we are
                             // displaying an error message to the user.
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
@@ -356,7 +358,7 @@ public class SignInActivity extends AppCompatActivity {
         userModal.setPhone(phone);
         userModal.setRole("User");
         userModal.setQualification("na");
-        userModal.setShopName("na");
+        userModal.setShopName("Patanjali Chikitsalya Jaunpur");
         userModal.setVerified(false);
 
 
