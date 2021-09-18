@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 public class ShowPatientDetailActivity extends AppCompatActivity {
 
-    TextView dateTv,hospitalTv,doctorTv,nameTv,mobileNoTv,genderTv,diseaseTv;
+    TextView dateTv,hospitalTv,doctorTv,nameTv,mobileNoTv,genderTv,diseaseTv,trackActivityTv;
     ImageView reportImgView;
     PatientModel patientModel;
     AdView adView;
@@ -41,6 +41,7 @@ public class ShowPatientDetailActivity extends AppCompatActivity {
         diseaseTv = findViewById(R.id.diseaseTv);
         reportImgView = findViewById(R.id.reportImgView);
         adView = findViewById(R.id.patient_list_ads);
+        trackActivityTv = findViewById(R.id.activityTv);
 
         displayPatientData(patientModel);
 
@@ -67,6 +68,15 @@ public class ShowPatientDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FullscreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("imgUrl",patientModel.getReportImg());
+                startActivity(intent);
+            }
+        });
+
+        trackActivityTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowPatientDetailActivity.this,CalenderActivity.class);
+                intent.putExtra("phone",patientModel.getPhoneNo());
                 startActivity(intent);
             }
         });

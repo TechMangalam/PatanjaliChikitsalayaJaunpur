@@ -215,6 +215,12 @@ public class HomeActivity extends AppCompatActivity {
         }else if(id == R.id.feedback){
             startActivity(new Intent(getApplicationContext(),FeedbackActivity.class));
 
+        }else if(id == R.id.trackActivity){
+            String phone = Objects.requireNonNull(user.getPhoneNumber());
+            Intent intent = new Intent(getApplicationContext(),CalenderActivity.class);
+            intent.putExtra("phone",phone.substring(3));
+            startActivity(intent);
+
         }
 
         return true;
@@ -276,7 +282,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userModal = snapshot.getValue(UserModal.class);
-                Log.e("userInfo",snapshot.getValue().toString());
+                //Log.e("userInfo",snapshot.getValue().toString());
                 progressDialog.dismiss();
             }
 

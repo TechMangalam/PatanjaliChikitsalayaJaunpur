@@ -41,6 +41,8 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,9 +52,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 public class YogaTrackingActivity extends YouTubeBaseActivity {
@@ -79,6 +84,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
     YogaSessionModel yogaSessionModel;
     TextToSpeech textToSpeech;
     FloatingActionButton stopVoiceBtn;
+    FirebaseUser user;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility")
@@ -102,6 +108,8 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
 
         progressDialogShow("Loading","Please wait ..");
         databaseActivities();
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         yogaContentRlt = findViewById(R.id.yogaContentRlt);
         yogaControlRlt = findViewById(R.id.controllerRlt);
@@ -282,6 +290,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                     @RequiresApi(api = Build.VERSION_CODES.M)
                     public void onFinish() {
                         mYouTubePlayer.pause();
+                        setDataForTracking(pos[0]);
                         if (pos[0] == 5){
                             yogaTimerTv.setText("Finished!");
                             nextYogaBtn.setEnabled(false);
@@ -325,8 +334,23 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
 
     }
 
+    private void setDataForTracking(int po) {
+
+        String poDat = new SimpleDateFormat("dd-M-yyyy", Locale.getDefault()).format(new Date());
+
+        String phone = Objects.requireNonNull(user.getPhoneNumber());
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("UserActivities").child(phone.substring(3)).child("Activity");
+
+        String data = yogaSessionModel.getSessionName()+" progress is "+((po+1)*16)+" %";
+        databaseReference.child(poDat).setValue(data);
+
+    }
+
     @Override
     public void onBackPressed() {
+
+        textToSpeech.stop();
 
         if (status){
             super.onBackPressed();

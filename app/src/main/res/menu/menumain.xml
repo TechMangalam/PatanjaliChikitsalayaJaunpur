@@ -20,6 +20,11 @@
 
     <item
 
+        android:title="Track Activity"
+        android:id="@+id/trackActivity"/>
+
+    <item
+
         android:title="Logout"
         android:id="@+id/log_out"/>
 
