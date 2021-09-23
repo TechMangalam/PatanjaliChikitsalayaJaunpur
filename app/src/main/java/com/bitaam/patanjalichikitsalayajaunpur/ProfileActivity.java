@@ -11,6 +11,8 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -63,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
     byte[] filesInBytes;
     Bitmap qImg;
     String imgLink="";
+    String userName = "na";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     if(!user.getDisplayName().isEmpty()){
                         profileName.setText(user.getDisplayName());
+                        userName = user.getDisplayName();
                         //profileName.setSelection(user.getDisplayName().length());
 
                     }else {
@@ -101,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }catch (Exception e){profileName.setText("Unknown");}
 
 
-                if(!user.getPhoneNumber().isEmpty()){
+                if(user.getPhoneNumber() != null){
                     email.setText(user.getPhoneNumber());
                     email.setEnabled(false);
                 }
@@ -165,8 +169,33 @@ public class ProfileActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                uploadImageToFirebase(filesInBytes);
+                if (filesInBytes!=null){
+                    progressBar.setVisibility(View.VISIBLE);
+                    uploadImageToFirebase(filesInBytes);
+                }else{
+                    changeProfileName(profileName.getText().toString());
+                }
+
+            }
+        });
+
+        profileName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (userName.equals(s.toString())){
+                    update.setEnabled(false);
+                }else{
+                    update.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -189,9 +218,10 @@ public class ProfileActivity extends AppCompatActivity {
 //                bmp.compress(Bitmap.CompressFormat.JPEG,25,baos);
 //                byte[] fileInBytes = baos.toByteArray();
 
-                filesInBytes = compressImg(qImg);
+                //filesInBytes = compressImg(qImg);
+                qImg = rotateImage(qImg,90);
                 rotateImageTv.setVisibility(View.VISIBLE);
-                profileImage.setImageURI(profileImageUri);
+                //profileImage.setImageURI(profileImageUri);
                 update.setEnabled(true);
 
                 //uploadImageToFirebase(fileInBytes);
@@ -255,7 +285,8 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void unused) {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"Updated",Toast.LENGTH_SHORT).show();
+                    update.setEnabled(false);
+                    Toast.makeText(getApplicationContext(),"Profile updated",Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -268,6 +299,32 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void changeProfileName(String name){
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name).build();
+
+        assert user != null;
+        user.updateProfile(profileUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                userName = user.getDisplayName();
+                progressBar.setVisibility(View.GONE);
+                update.setEnabled(false);
+                Toast.makeText(getApplicationContext(),"Profile name updated",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(),e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 
 

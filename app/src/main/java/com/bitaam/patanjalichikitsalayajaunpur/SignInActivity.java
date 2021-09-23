@@ -182,7 +182,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(getApplicationContext(), "Try again after some time.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
                             }
 
@@ -253,7 +253,7 @@ public class SignInActivity extends AppCompatActivity {
 
         resendTimerTv.setVisibility(View.VISIBLE);
 
-        int tt = 60000*2;
+        int tt = 60000*5;
         new CountDownTimer(tt,1000){
             public void onTick(long millisUntilFinished) {
                 generateOtpBtn.setEnabled(false);

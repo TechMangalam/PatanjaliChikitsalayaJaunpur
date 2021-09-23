@@ -325,6 +325,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
                                 progTo6.setBackgroundColor(getColor(R.color.teal_200));
                                 break;
                         }
+
                     }
                 }.start();
                 startYogaBtn.setEnabled(false);
