@@ -76,7 +76,18 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="myupchaar.bitaam.com"
+                    android:scheme="https"/>
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

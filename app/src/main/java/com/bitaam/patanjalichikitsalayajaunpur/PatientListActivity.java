@@ -81,8 +81,8 @@ public class PatientListActivity extends AppCompatActivity {
         patientListRecycler.setAdapter(patientListAdapter);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Patients");
-
-        databaseReference.orderByChild("dateTime").addChildEventListener(new ChildEventListener() {
+        //.orderByChild("dateTime")
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if (!userModal.getRole().equals("User") || Objects.equals(snapshot.child("phoneNo").getValue(), mobNo)) {

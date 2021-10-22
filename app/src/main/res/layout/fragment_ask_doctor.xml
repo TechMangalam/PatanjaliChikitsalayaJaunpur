@@ -42,16 +42,16 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginEnd="10dp"
         android:id="@+id/askQuestion"
-        android:elevation="30dp"
-        android:src="@drawable/ic_baseline_add_24"
-        android:contentDescription="@string/askquestion"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="80dp"
+        android:contentDescription="@string/askquestion"
+        android:elevation="30dp"
+        android:src="@drawable/ic_baseline_add_24" />
 
 
 </RelativeLayout>

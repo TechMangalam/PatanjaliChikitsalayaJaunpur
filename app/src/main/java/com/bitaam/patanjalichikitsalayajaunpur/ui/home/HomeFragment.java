@@ -423,11 +423,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("img1",infoImgUrls.get(4));
-        editor.putString("img2",infoImgUrls.get(5));
-        editor.putString("img3",infoImgUrls.get(6));
-        editor.putString("img4",infoImgUrls.get(7));
-        editor.apply();
+        if (infoImgUrls.size()>4 && infoImgUrls.size()<=8){
+            @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("img1",infoImgUrls.get(4));
+            editor.putString("img2",infoImgUrls.get(5));
+            editor.putString("img3",infoImgUrls.get(6));
+            editor.putString("img4",infoImgUrls.get(7));
+            editor.apply();
+        }
     }
 }

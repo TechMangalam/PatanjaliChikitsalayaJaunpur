@@ -134,7 +134,7 @@ public class PatientListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int position = recyclerView.getChildLayoutPosition(view);
                     Intent intent = new Intent(context, ShowPatientDetailActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("patientInfo", patientModels.get(position));
+                    intent.putExtra("patientInfo", filterdItemModels.get(position));
                     context.startActivity(intent);
 
                 }

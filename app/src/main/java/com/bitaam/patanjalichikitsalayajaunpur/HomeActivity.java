@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,6 +28,8 @@ import com.bitaam.patanjalichikitsalayajaunpur.ui.Nuske.NuskeFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.home.HomeFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.upchar.UpcharFragment;
 import com.bitaam.patanjalichikitsalayajaunpur.ui.yoga.YogaFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +40,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
@@ -99,6 +104,31 @@ public class HomeActivity extends AppCompatActivity {
 
         }.start();
 
+        getDynamicLinkData();
+
+
+    }
+
+    private void getDynamicLinkData() {
+
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
+                .addOnSuccessListener(new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null){
+                            deepLink = pendingDynamicLinkData.getLink();
+                            if (deepLink!=null && (deepLink.toString()).equals("https://myupchaar.bitaam.com/nuske")){
+                                navView.setSelectedItemId(R.id.navigation_nuske);
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Dynamic", "getDynamicLink:onFailure", e);
+            }
+        });
 
     }
 

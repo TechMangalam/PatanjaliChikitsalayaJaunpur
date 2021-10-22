@@ -1,6 +1,7 @@
 package com.bitaam.patanjalichikitsalayajaunpur;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,7 @@ public class AddNuskeActivity extends AppCompatActivity {
     String role="na";
     boolean completed = false;
     FirebaseUser user;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -145,7 +147,7 @@ public class AddNuskeActivity extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     //imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
 
-                    if (videoLinkEdt.getText().toString().trim().length() > 10){
+                    if (videoLinkEdt.getText().toString().trim().length() > 10 && videoLinkEdt.getText().toString().trim().startsWith("https://youtu.be/")){
                         videoId = "" + videoLinkEdt.getText() + "";
                         checkForLink();
                         checkVideoWebView.setVisibility(View.VISIBLE);
@@ -154,8 +156,9 @@ public class AddNuskeActivity extends AppCompatActivity {
                         submitBtn.setEnabled(true);
                         //attachYouVidBtn.setVisibility(View.VISIBLE);
                     }else{
-                        videoLinkEdt.setError("enter youtube video link");
+                        videoLinkEdt.setError("enter valid youtube video link");
                         videoLinkEdt.setFocusable(true);
+                        submitBtn.setEnabled(false);
                     }
                 }else{
                     submitBtn.setEnabled(false);
@@ -173,7 +176,12 @@ public class AddNuskeActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadImageToFirebase(filesInBytes);
+                if (filesInBytes!=null){
+                    uploadImageToFirebase(filesInBytes);
+                    progressDialogShow("Submitting","Please wait ...");
+                }else{
+                    Toast.makeText(getApplicationContext(), "Attach image !", Toast.LENGTH_SHORT).show();
+                }
                 //alert();
             }
         });
@@ -219,7 +227,7 @@ public class AddNuskeActivity extends AppCompatActivity {
 
         String imgId = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.getDefault()).format(new Date())+""+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString()+".jpg";
         ImgId = imgId;
-        final StorageReference fileRef = FirebaseStorage.getInstance().getReference("Images").child(imgId);
+        final StorageReference fileRef = FirebaseStorage.getInstance().getReference("NuskeImages").child(imgId);
         fileRef.putBytes(fileInBytes).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -241,7 +249,7 @@ public class AddNuskeActivity extends AppCompatActivity {
                 imageView.setVisibility(View.GONE);
                 imageView.setImageURI(null);
                 imgLink = null;
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"Try again ! Failed Uploading Image",Toast.LENGTH_SHORT).show();
             }
         });
@@ -267,41 +275,50 @@ public class AddNuskeActivity extends AppCompatActivity {
             dNameEdt.setError("Name is empty !");
             dNameEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
         if (benE.isEmpty()){
             dBenEnEdt.setError("Benefit is empty !");
             dBenEnEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
         if (benH.isEmpty()){
             dBenHiEdt.setError("Benefit is empty");
             dBenHiEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
         if (howE.isEmpty()){
             dHowEnEdt.setError("How to do is empty");
             dHowEnEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
         if (howH.isEmpty()){
             dHowHiEdt.setError("How to do is empty");
             dHowHiEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
 
-        if (videoLink.isEmpty()){
-            videoLinkEdt.setError("video link is empty");
+        if (videoLink.isEmpty() || !videoLink.startsWith("https://youtu.be/")){
+            videoLinkEdt.setError("Enter valid youtube video link");
             videoLinkEdt.setFocusable(true);
             flag = false;
+            progressDialog.dismiss();
         }
 
         if (imgLink.isEmpty()){
             Toast.makeText(this, "Attach image !", Toast.LENGTH_SHORT).show();
             flag = false;
+            progressDialog.dismiss();
         }
 
         if (flag){
             updateToDatabase(name,benE,benH,howE,howH,imgLink,videoLink,writerName);
+        }else {
+            progressDialog.dismiss();
         }
 
     }
@@ -325,7 +342,7 @@ public class AddNuskeActivity extends AppCompatActivity {
         databaseReference.child(name).setValue(nuskeModal).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
+                progressDialog.dismiss();
                 Toast.makeText(AddNuskeActivity.this, "Added Successfully !", Toast.LENGTH_SHORT).show();
                 AlertExit("Confirmation","Added Successfully! Do you want to edit or exit?");
                 AlertDialog alertDialog = builder.create();
@@ -336,6 +353,7 @@ public class AddNuskeActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
                 Toast.makeText(AddNuskeActivity.this, "Try again ! "+e, Toast.LENGTH_SHORT).show();
             }
         });
@@ -424,6 +442,18 @@ public class AddNuskeActivity extends AppCompatActivity {
                 + "</html>";
 
         return html;
+    }
+
+    private void progressDialogShow(String title,String Msg){
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(title);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(Msg);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //progressDialog.setMax(100);
+        progressDialog.show();
+
     }
 
 

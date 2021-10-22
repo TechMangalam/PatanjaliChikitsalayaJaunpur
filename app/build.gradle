@@ -50,9 +50,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
 
-    implementation 'com.google.android.gms:play-services-ads:20.2.0'
-    implementation 'com.google.firebase:firebase-ads:20.2.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.0.0'
+    implementation 'com.google.android.gms:play-services-ads:20.3.0'
+    implementation 'com.google.firebase:firebase-ads:20.3.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.0'
     implementation 'com.google.firebase:firebase-dynamic-links'
 
     implementation 'com.facebook.fresco:fresco:2.3.0'
