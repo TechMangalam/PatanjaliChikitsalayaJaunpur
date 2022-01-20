@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
     UserModal userModal;
     RecyclerView dailyYogRecycler,generalUpcharRecycler,popularNuskeRecycler;
     CardView itemSearchCard,yogaSessionCard;
+    TextView viewAllNuskeTv;
     FloatingActionButton addPatientActionBtn;
     CarouselView carouselView;
     View parentView;
@@ -94,6 +95,7 @@ public class HomeFragment extends Fragment {
         popularNuskeRecycler = root.findViewById(R.id.popularNuskeRecycler);
         addPatientActionBtn = root.findViewById(R.id.addPatientActionBtn);
         yogaSessionCard = root.findViewById(R.id.yogaSessionCard);
+        viewAllNuskeTv = root.findViewById(R.id.viewAllNuskeTv);
         infoImgUrls = new ArrayList<>();
         sharedPreferences = requireActivity().getSharedPreferences("HomeInfo", Context.MODE_PRIVATE);
 
@@ -165,6 +167,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void onClickAndTouchEvent(){
+
+        viewAllNuskeTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         yogaSessionCard.setOnClickListener(new View.OnClickListener() {
             @Override

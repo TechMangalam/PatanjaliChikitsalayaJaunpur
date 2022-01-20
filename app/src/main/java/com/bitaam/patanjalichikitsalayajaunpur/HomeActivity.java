@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
                         if (pendingDynamicLinkData != null){
                             deepLink = pendingDynamicLinkData.getLink();
                             if (deepLink!=null && (deepLink.toString()).equals("https://myupchaar.bitaam.com/nuske")){
-                                navView.setSelectedItemId(R.id.navigation_nuske);
+                                navView.setSelectedItemId(R.id.navigation_exercise);
                             }
                         }
                     }
@@ -169,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
                         //if (interstitialAd.isLoaded())
                             //interstitialAd.show();
                         break;
-                    case R.id.navigation_nuske:
+                    case R.id.navigation_exercise:
                         fragment = new NuskeFragment();
                         homeFlag = false;
                         toolbar.setTitle("Nuske");

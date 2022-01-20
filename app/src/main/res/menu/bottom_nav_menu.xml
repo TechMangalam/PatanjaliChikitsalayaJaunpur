@@ -22,8 +22,8 @@
         android:title="Yoga" />
 
     <item
-        android:id="@+id/navigation_nuske"
+        android:id="@+id/navigation_exercise"
         android:icon="@drawable/ic_baseline_nuske"
-        android:title="Nuske" />
+        android:title="Exercise" />
 
 </menu>
