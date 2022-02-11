@@ -77,7 +77,7 @@ public class YogaTrackingActivity extends YouTubeBaseActivity {
     AdView ban1,ban2,ban3,ban12,ban13,ban14;
     YouTubePlayerView youTubePlayerView;
     YouTubePlayer mYouTubePlayer;
-    private final String API_KEY = "AIzaSyAjpzvEvj6rYzw4TF_cdmxEDTjCXFyYx5k";
+    private final String API_KEY = "youtube-api-key";
     int currentTime = 0;
     int currentPos = 0;
     ArrayList<String> yogaList;
